@@ -1,0 +1,72 @@
+** Pair Sum in a Sorted and Rotated Array :emacs:org:study
+  :PROPERTIES:
+  :Owner: 高
+  :Date: 2025-08-21
+  :END:
+
+Given an array of positive elements arr[] that is sorted and then rotated around an unknown point, the task is to check if the array has a pair with sum equals to a given target.
+
+给定一个只包含正数的数组 arr[]，该数组原本是 有序的，然后在某个未知的点被 旋转。任务是判断该数组中是否存在一对数，它们的和等于给定的目标值 target。
+
+** 解法
+
+1.双指针
+#+begin_src python :results output
+class Solution:
+    ##Complete this function
+    def pairInSortedRotated(self, arr, target):
+        n = len(arr)
+
+        left = 0
+        right = n - 1
+        point = 0
+
+        while left < right:
+            if arr[left] < arr[right]:
+                point = left
+                break
+
+            mid = left + (right - left) // 2
+
+            if mid > left and arr[mid] < arr[mid - 1]:
+                point = mid
+                break
+            if mid < right and arr[mid] > arr[mid + 1]:
+                point = mid + 1
+                break
+
+            if arr[mid] >= arr[left]:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        # print(point)
+
+        lr = point
+
+        rr = point - 1
+
+        if rr < 0:
+            rr = n - 1
+        while lr != rr:
+            smr = arr[lr] + arr[rr]
+            if smr == target:
+                return True
+
+            if smr > target:
+                rr -= 1
+            else:
+                lr += 1
+
+            if rr < 0:
+                rr = n - 1
+            if lr > n -1:
+                lr = 0
+
+        return False
+
+
+a = Solution()
+print(a.pairInSortedRotated([8, 9, 1, 3, 5, 6, 7], 4))
+#+end_src
+

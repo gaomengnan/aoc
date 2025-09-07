@@ -1,0 +1,71 @@
+* Find the closest pair from two sorted arrays
+
+给定两个数组arr1[0...m-1]和arr2[0..n-1]，以及一个数字x，任务是找到对arr1[i] + arr2[j]，使得(arr1[i] + arr2[j] - x)的绝对值最小
+
+** 例子
+
+输入：   arr1[] = {1, 4, 5, 7};
+         arr2[] = {10, 20, 30, 40};
+         x = 32
+输出：   1 和 30
+输入：   arr1[] = {1, 4, 5, 7};
+         arr2[] = {10, 20, 30, 40};
+         x = 50
+输出：   7 和 40
+
+** 解法
+
+使用双指针法，时间复杂度 O(n + m)，空间复杂度 O(1)：
+
+#+begin_src python
+class Solution:
+    def printClosest(self, arr, brr, n, m, x):
+        left = 0
+        right = m - 1
+        if n == 0 or m == 0:
+            return []
+
+        ans = [arr[0], brr[right]]
+        bestDiff = abs(x - (arr[0] + brr[right]))
+
+        while left < n and right >= 0:
+            currentSum = arr[left] + brr[right]
+            currentDiff = abs(x - currentSum)
+
+            if currentDiff < bestDiff or (
+                currentDiff == bestDiff and brr[right] - arr[left] > ans[1] - ans[0]
+            ):
+                ans = [arr[left], brr[right]]
+                bestDiff = currentDiff
+
+            if currentSum == x:
+                break
+            elif currentSum > x:
+                right -= 1
+            else:
+                left += 1
+
+        return ans
+#+end_src
+
+** 算法分析
+
+- *时间复杂度*：O(n + m)，其中 n 和 m 分别是两个数组的长度
+- *空间复杂度*：O(1)，只使用常数级别的额外空间
+- *算法思想*：利用数组已排序的特性，使用双指针从左到右和从右到左遍历，根据当前和与目标值的关系调整指针位置
+
+** 测试
+
+运行测试用例：
+
+#+begin_src bash
+python test_cases.py
+#+end_src
+
+包含 13 个测试用例，覆盖：
+- 基本功能测试
+- 边界情况（空数组、单元素数组）
+- 负数处理
+- 多解情况
+- 大数测试
+- 重复值测试

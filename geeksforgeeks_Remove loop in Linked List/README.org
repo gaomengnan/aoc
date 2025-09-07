@@ -1,0 +1,45 @@
+* Remove loop in Linked List
+
+给定一个单链表的头节点，任务是移除链表中的环（如果存在）。当链表中的某个节点的 next 指针指向之前的某个节点时，形成环。题目中内部给定了一个变量 pos，表示环开始的节点索引，但它并不会作为参数传入。
+如果成功移除环，终端将打印 true，否则打印 false。
+
+** 快慢指针实现
+
+快指针最后会撞到慢指针 如果存在环
+
+#+begin_src python
+class Solution:
+    def removeLoop(self, head):
+        # code here
+        slow = head
+        fast = head
+        found = False
+
+        while True:
+            if not fast.next or not fast.next.next:
+                break
+
+            slow = slow.next
+            fast = fast.next.next
+
+            if slow == fast:
+                found = True
+
+                break
+
+        if found:
+            slow = head
+
+            while slow != fast:
+                slow = slow.next
+                fast = fast.next
+
+            while fast.next != slow:
+                fast = fast.next
+            fast.next = None
+
+            # print("true")
+        else:
+            pass
+            # print("false")
+#+end_src

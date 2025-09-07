@@ -1,0 +1,99 @@
+* 4 Sum – Count quadruplets with given sum
+
+** 题目描述
+给定一个数组 arr[] 和一个整数 target，要求统计有多少个不同索引的四元组
+(arr[i], arr[j], arr[k], arr[l]) 满足：
+#+begin_example
+arr[i] + arr[j] + arr[k] + arr[l] == target
+且 i, j, k, l 互不相同
+#+end_example
+
+输出一个整数，表示符合条件的四元组数量。
+
+** 示例
+#+begin_src python
+arr = [1, 1, 4, 5, 5, 7, 8, 11, 12, 12, 12, 14, 15, 16, 16, 18]
+target = 19
+输出: 8
+原因:
+- (1,1,5,12) 出现 6 次 (因为有多个 1、5、12)
+- (1,5,5,8) 出现 2 次
+#+end_src
+
+** 解法一：O(n^3) 双指针
+1. 排序数组
+2. 外层两层循环固定前两个数
+3. 剩下两个数用双指针法查找
+4. 遇到相等时需要统计重复元素数量
+5. 总体复杂度 O(n^3)，适合 n <= 300 左右
+
+#+begin_src python
+class Solution:
+    def countSum(self, arr, target):
+        arr.sort()
+        n = len(arr)
+        counter = 0
+
+        for i in range(n - 3):
+            for j in range(i + 1, n - 2):
+                T = target - arr[i] - arr[j]
+                l, r = j + 1, n - 1
+                while l < r:
+                    s = arr[l] + arr[r]
+                    if s < T:
+                        l += 1
+                    elif s > T:
+                        r -= 1
+                    else:
+                        if arr[l] == arr[r]:
+                            m = r - l + 1
+                            counter += m * (m - 1) // 2
+                            break
+                        cL, cR = 1, 1
+                        while l + cL < r and arr[l + cL] == arr[l]:
+                            cL += 1
+                        while r - cR > l and arr[r - cR] == arr[r]:
+                            cR += 1
+                        counter += cL * cR
+                        l += cL
+                        r -= cR
+        return counter
+print(Solution().countSum([1, 5,3 ,1,2,10], 20))
+#+end_src
+
+#+RESULTS:
+: None
+
+** 解法二：O(n^2) 哈希优化
+1. 用哈希表存储所有 arr[i] + arr[j] 的值和对应的索引对
+2. 枚举两个 pair sum，判断是否能组成 target
+3. 确保四个索引互不相同
+4. 平均复杂度 O(n^2)，更适合大输入
+
+#+begin_src python
+from collections import defaultdict
+
+class Solution:
+    def countSum(self, arr, target):
+        arr.sort()
+        n = len(arr)
+        pair_sum = defaultdict(list)
+        counter = 0
+
+        for i in range(n):
+            for j in range(i + 1, n):
+                pair_sum[arr[i] + arr[j]].append((i, j))
+
+        for s in list(pair_sum.keys()):
+            t = target - s
+            if t in pair_sum:
+                for (i, j) in pair_sum[s]:
+                    for (k, l) in pair_sum[t]:
+                        if j < k:  # 保证不重叠且避免重复计数
+                            counter += 1
+        return counter
+#+end_src
+
+** 总结
+- O(n^3) 方法实现简单，适合小规模数据
+- O(n^2) 哈希优化能通过大规模数据测试（如 GFG）

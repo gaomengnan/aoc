@@ -1,0 +1,60 @@
+* Problems
+
+** Longest substring with distinct characters
+
+*** Description
+You are given a string s. You have to find the length of the longest substring
+with all distinct characters.
+
+*** Examples
+
+#+BEGIN_EXAMPLE
+Input:  s = "geeksforgeeks"
+Output: 7
+Explanation: "eksforg" is the longest substring with all distinct characters.
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+Input:  s = "aaa"
+Output: 1
+Explanation: "a" is the longest substring with all distinct characters.
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+Input:  s = "abcdefabcbb"
+Output: 6
+Explanation: "abcdef" is the longest substring with all distinct characters.
+#+END_EXAMPLE
+
+
+*** 解法
+
+**** 双指针 + 滑动窗口
+
+#+begin_src python
+
+class Solution:
+    def longestUniqueSubstr(self, s: str) -> int:
+        n = len(s)
+        if n == 0:
+            return 0
+
+        slow = 0
+        ans = 0
+        wd = {}  # 字符 -> 上次出现的下标
+
+        for fast in range(n):
+            if s[fast] in wd and wd[s[fast]] >= slow:
+                # 如果当前字符重复，更新 slow 到重复位置的下一个
+                slow = wd[s[fast]] + 1
+
+            wd[s[fast]] = fast
+            ans = max(ans, fast - slow + 1)
+
+        return ans
+
+
+Solution().longestUniqueSubstr("abcdefabcbb")
+
+
+#+end_src

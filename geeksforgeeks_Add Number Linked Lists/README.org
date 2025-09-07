@@ -1,0 +1,88 @@
+* Add Number Linked Lists
+
+You are given the head of two singly linked lists head1 and head2 representing two non-negative integers. You have to return the head of the linked list representing the sum of these two numbers.
+
+Note: There can be leading zeros in the input lists, but there should not be any leading zeros in the output list.
+
+
+
+** Examples
+
+
+Input:
+
+#+ATTR_ORG: :width 200
+[[file:test.webp]]
+
+Output:  1 -> 1 -> 2 -> 2
+Explanation: Given numbers are 123 and 999. There sum is 1122.
+
+
+*** 思路
+
+1. 双指针
+
+#+begin_src python
+class Solution:
+    def addTwoLists(self, head1, head2):
+        a = []
+        b = []
+
+        a1 = head1
+
+        while a1:
+            a.append(a1.data)
+            a1 = a1.next
+        b1 = head2
+
+        while b1:
+            b.append(b1.data)
+
+            b1 = b1.next
+        i, j = len(a) - 1, len(b) - 1
+
+        ans = []
+
+        carry = 0
+        while 0 <= i < len(a) or 0 <= j < len(b):
+            v1 = a[i] if 0 <= i < len(a) else 0
+            v2 = b[j] if 0 <= j < len(b) else 0
+            smer = v1 + v2 + carry
+            carry = 0
+
+            if smer >= 10:
+                carry = 1
+                ans.append(smer % 10)
+            else:
+                ans.append(smer)
+            i -= 1
+            j -= 1
+
+        if carry > 0:
+            ans.append(carry)
+
+        ans.reverse()
+
+        head = None
+        current = head
+
+        for i in range(len(ans)):
+            if ans[i] == 0 and head is None:
+                continue
+            elif head is None:
+                head = Node(ans[i])
+                current = head
+            else:
+                current.next = Node(ans[i])
+                current = current.next
+
+        # node1 = generate_linked_list(ans)
+
+        cur = head
+
+        while cur:
+            print(cur.data)
+            cur = cur.next
+
+        print(a, b, ans, head)
+#+end_src

@@ -1,0 +1,72 @@
+* 问题
+
+** Delete Middle of Linked List
+
+Given a singly linked list, delete the middle of the linked list. Note: If there are even nodes, then there would be two middle nodes, we need to delete the second middle element. If the input linked list has a single node, then it should return NULL.
+
+
+** 示例
+
+Input: LinkedList: 1->2->3->4->5
+Output: 1->2->4->5
+
+
+** 解法
+
+1. 快慢指针
+
+   #+begin_src python
+
+'''
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+'''
+
+
+class Solution:
+    def deleteMid(self, head):
+        """
+        head:  head of given linkedList
+        return: head of resultant llist
+        """
+
+        cur = head
+
+        counter = 0
+
+        while cur:
+            counter += 1
+            cur = cur.next
+
+        # print("count", counter)
+
+        if counter == 1:
+            return None
+
+        mid = counter // 2
+
+        slow = None
+        fast = head
+
+        idx = 0
+
+        while True:
+            if idx == mid:
+                if slow is None:
+                    break
+                slow.next = fast.next
+                break
+
+            slow = fast
+
+            fast = fast.next
+
+            idx += 1
+
+        # print_linked_list(head)
+
+        return head
+
+   #+end_src

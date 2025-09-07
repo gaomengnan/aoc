@@ -1,0 +1,5 @@
+* Remove and Reverse
+
+Given a string S which consists of only lowercase English alphabets, you have to perform the below operations:
+If the string S contains any repeating character, remove the first repeating character and reverse the string and again perform the above operation on the modified string, otherwise, you stop.
+You have to find the final string.

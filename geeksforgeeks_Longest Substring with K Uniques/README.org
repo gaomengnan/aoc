@@ -1,0 +1,74 @@
+* 包含 K 个不同字符的最长子串
+
+给定一个仅由小写字母组成的字符串 s 和一个整数 k。你的任务是找到包含恰好 k 个不同字符的最长子串的长度。
+
+**注意**：如果不存在这样的子串，则返回 -1。
+
+**示例：
+输入：s = "aabacbebebe", k = 3
+输出：7
+解释：包含恰好 3 个不同字符的最长子串是 "cbebebe"，其中包含 'c'、'b' 和 'e'。
+
+输入：s = "aaaa", k = 2
+输出：-1
+解释：不存在包含 2 个不同字符的子串。
+
+输入：s = "aabaaab", k = 2
+输出：7
+解释：整个字符串 "aabaaab" 恰好包含 2 个不同字符 'a' 和 'b'，因此是最长的有效子串。
+
+** 思路
+双指针
+滑动窗口
+
+#+begin_src python
+class Solution:
+    def longestKSubstr(self, s, k):
+        # code here
+        # aabacbebebe
+        # a a b a c b e
+
+        stores = {}
+
+        ans = float('-inf')
+
+        i = 0
+        j = 0
+        while  j< len(s):
+            if s[j] not in stores:
+                k -=1
+
+
+
+                if k < 0:
+                    ans = max(ans, sum(stores.values()))
+
+                    # delete one
+                    while i < j:
+
+                        stores[s[i]] -=1
+                        if stores[s[i]] == 0:
+                            del stores[s[i]]
+                            i +=1
+                            break
+                        i +=1
+
+
+
+                stores[s[j]]  = 1
+
+
+            else:
+                stores[s[j]] +=1
+
+            if j == len(s)-1 and k <=0:
+                ans = max(ans, sum(stores.values()))
+
+            j +=1
+        # print(stores)
+        # print(ans)
+        if ans == float('-inf'):
+            return -1
+        return ans
+# Solution().longestKSubstr('mlg', 1)
+#+end_src

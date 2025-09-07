@@ -1,0 +1,46 @@
+* 将所有 0 移动到数组末尾
+
+** 难度：简单
+** 准确率：45.51%
+** 提交数：37.2 万+
+** 分值：2
+** 平均耗时：15 分钟
+
+你得到一个由非负整数组成的数组 arr[]。
+要求：
+
+将数组中的所有 0 移动到数组的右端；
+
+同时保持 非零元素的相对顺序不变；
+
+必须在 原地（in place）完成操作，不能使用额外的数组空间。.
+
+** 解体思路
+
+1.双指针
+
+#+begin_src python
+class Solution:
+    def pushZerosToEnd(self, arr):
+        n = len(arr)
+
+        start_index = False
+
+        for i in range(0, n):
+            if arr[i] == 0:
+                if start_index is False:
+                    start_index = i
+                else:
+                    pass
+                    # start_index += 1
+            elif arr[i] != 0 and start_index is not False:
+                arr[start_index], arr[i] = arr[i], arr[start_index]
+                start_index += 1
+        return arr
+
+
+return Solution().pushZerosToEnd([0, 0, 0, 1, 2])
+#+end_src
+
+#+RESULTS:
+| 1 | 2 | 0 | 0 | 0 |

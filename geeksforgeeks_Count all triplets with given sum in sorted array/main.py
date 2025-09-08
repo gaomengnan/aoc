@@ -1,28 +1,3 @@
-* 问题
-
-** Count all triplets with given sum in sorted array
-
-*** 描述
-
-Given a sorted array arr[] and a target value, the task is to count triplets (i, j, k) of valid indices, such that arr[i] + arr[j] + arr[k] = target and i < j < k.
-
-
-*** 示例
-    
-    #+BEGIN_EXAMPLE
-    Input: arr[] = [-3, -1, -1, 0, 1, 2], target = -2
-    Output: 4
-    Explanation: Four triplets that add up to -2 are:
-    arr[0] + arr[3] + arr[4] = (-3) + 0 + (1) = -2
-    arr[0] + arr[1] + arr[5] = (-3) + (-1) + (2) = -2
-    arr[0] + arr[2] + arr[5] = (-3) + (-1) + (2) = -2
-    arr[1] + arr[2] + arr[3] = (-1) + (-1) + (0) = -2 
-    #+END_EXAMPLE
-*** 解法
-
-    1. 双指针
-
-       #+begin_src python
 class Solution:
     def countTriplets(self, arr, target):
         # 不需要排序
@@ -69,4 +44,3 @@ class Solution:
 
 
 print(Solution().countTriplets([0, 0, 0, 0, 0, 0], 0))
-       #+end_src

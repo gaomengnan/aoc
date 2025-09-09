@@ -1,0 +1,48 @@
+* 问题
+
+** Police and Thieves
+
+*** 描述
+
+Given an array arr[], where each element contains either a 'P' for policeman or a 'T' for thief. Find the maximum number of thieves that can be caught by the police.
+Keep in mind the following conditions :
+
+1. Each policeman can catch only one thief.
+2. A policeman cannot catch a thief who is more than k units away from him.
+
+
+*** 示例
+
+#+begin_example
+Input: arr[] = ['P', 'T', 'T', 'P', 'T'], k = 1
+Output: 2
+Explanation: Maximum 2 thieves can be caught. First policeman catches first thief and second police man can catch either second or third thief.
+#+end_example
+
+*** 解法
+
+1. 双指针
+
+#+begin_src python
+class Solution:
+    def catchThieves(self, arr, k):
+        ans = 0
+        i = 0
+        j = 1
+        while j < len(arr):
+            if arr[i] == "#":
+                i +=1
+                continue
+            if j - i > k:
+                i += 1
+                continue
+            if arr[j] != arr[i]:
+                ans += 1
+                arr[j] = "#"
+                i += 1
+                j += 1
+            else:
+                j += 1
+
+        return ans
+#+end_src

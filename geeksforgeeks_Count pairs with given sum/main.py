@@ -1,0 +1,37 @@
+class Solution:
+    def countPairs(self, arr, target):
+        arr.sort()
+        n = len(arr)
+
+        i = 0
+        j = n - 1
+
+        ans = 0
+
+        while i < j:
+            toSum = arr[i] + arr[j]
+
+            if toSum < target:
+                i += 1
+            elif toSum > target:
+                j -= 1
+            else:
+                k = i
+                z = j
+
+                while k < j and arr[k] == arr[i]:
+                    k += 1
+
+                while z > i and arr[z] == arr[j]:
+                    z -= 1
+
+                if arr[i] == arr[j]:
+                    ans += (k - i + 1) * (k - i) // 2
+                else:
+                    ans += (k - i) * (j - z)
+                i = k
+                j = z
+        return ans
+
+
+print(Solution().countPairs([10, 12, 10, 15, -1], 125))

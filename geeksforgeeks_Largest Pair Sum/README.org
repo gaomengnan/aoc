@@ -1,0 +1,33 @@
+* Question
+
+** Largest Pair Sum
+
+*** Description
+
+Find the largest pair sum in an array of distinct integers.
+
+
+
+*** Examples
+
+#+begin_example
+Input: arr[] = [12, 34, 10, 6, 40]
+Output: 74
+Explanation: Sum of 34 and 40 is the largest, i.e, 34 + 40 = 74.
+#+end_example
+
+
+#+begin_src python
+
+from typing import List
+
+
+class Solution:
+    def pairsum(self, arr: List[int]) -> int:
+        arr.sort()
+
+        return arr[-1] + arr[-2]
+
+
+print(Solution().pairsum([1, 2, 3, 3, 4, 5]))
+#+end_src

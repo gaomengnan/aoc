@@ -1,0 +1,52 @@
+*  Question
+
+** Special array reversal
+
+*** Description
+
+Difficulty: EasyAccuracy: 40.46%Submissions: 22K+Points: 2
+Given a string S, containing special characters and all the alphabets, reverse the string without
+affecting the positions of the special characters.
+
+
+*** Examples
+
+#+begin_example
+Input: S = "A&B"
+Output: "B&A"
+Explanation: As we ignore '&' and
+then reverse, so answer is "B&A".
+#+end_example
+
+
+#+begin_src python :results output
+#User function Template for python3
+class Solution:
+    def reverse(self, s):
+        tol = list(s)
+
+        n = len(tol)
+
+        i = 0
+        j = n - 1
+
+        while i < j:
+            if not tol[i].isalpha():
+                i +=1
+
+                continue
+            if not tol[j].isalpha():
+                j -=1
+                continue
+            tol[i], tol[j] = tol[j], tol[i]
+            i +=1
+            j -=1
+        return "".join(tol)
+
+print(Solution().reverse("A&B"))
+print(Solution().reverse('"A&x#'))
+#+end_src
+
+#+RESULTS:
+: B&A
+: "x&A#

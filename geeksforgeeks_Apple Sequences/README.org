@@ -1,0 +1,65 @@
+* 问题
+
+** **Apple Sequences**
+
+*** Description
+
+There is a string of size n containing only 'A' and 'O'. 'A' stands for Apple, and 'O' stands for Orange. We have m number of spells, each spell allows us to convert an orange into an apple. Find the longest subarray of apples you can make, given a string and the value of m
+
+*** Examples
+
+#+begin_example
+Input:
+N = 5
+M = 1
+arr[] = 'AAOAO'
+Output: 4
+Explanation: Changing the orange at
+3rd position into an apple gives
+us the maximum possible answer.
+#+end_example
+
+
+#+begin_src python
+
+# User function Template for python3
+
+
+class Solution:
+    def appleSequences(self, n, m, arr):
+        slow = 0
+
+        fast = 0
+
+        k = m
+
+        ans = 0
+
+        while fast < n:
+            if arr[fast] == "O":
+                k -= 1
+
+            if k < 0:
+                while slow < fast:
+                    if arr[slow] == "O":
+                        slow += 1
+                        k += 1
+                        break
+                    else:
+                        slow += 1
+
+                # 从 slow 开始 找到第一个 0
+            if k >= 0:
+                ans = max(ans, fast - slow + 1)
+            fast += 1
+            # slow = fo
+            # k = m
+
+        return ans
+
+
+# O -> A
+print(Solution().appleSequences(5, 1, "AAOOA"))
+
+
+#+end_src

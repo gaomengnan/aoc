@@ -1,0 +1,41 @@
+* Question
+
+** Extract the integers
+
+Given a string s, extract all the integers from s.
+
+#+begin_example
+Input:
+s = "1: Prakhar Agrawal, 2: Manish Kumar Rai,
+     3: Rishabh Gupta56"
+Output: 1 2 3 56
+Explanation:
+1, 2, 3, 56 are the integers present in s.
+#+end_example
+
+#+begin_src python :results output
+class Solution:
+    def extractIntegerWords(self, s):
+        n = len(s)
+        pstr = ''
+
+        ans = []
+
+        for i in range(n):
+            if s[i].isdigit():
+                pstr += s[i]
+            else:
+                if pstr:
+                    ans.append(pstr)
+                    pstr = ''
+        if pstr:
+            ans.append(pstr)
+        return ans
+
+s = "1: Prakhar Agrawal, 2: Manish Kumar Rai, 3: Rishabh Gupta56"
+
+print(Solution().extractIntegerWords(s))
+#+end_src
+
+#+RESULTS:
+: ['1', '2', '3', '56']

@@ -1,21 +1,3 @@
-* Question
-
-** Longest Repeating Character Replacement
-
-*** Description
-
-Given a string s and an integer k. You can choose any string character in one operation and change it to any other uppercase English character. You can perform this operation at most k times. Return the length of the longest substring containing the same letter you can get after performing the above operations. Note: s consists of only uppercase English letters.
-
-*** Examples
-
-#+begin_example
-Input: s = "ABBA", k = 2
-Output: 4
-Explanation: Replace the 2 occurrences of 'A' with 2 'B's or vice-versa.
-#+end_example
-
-*** Solution
-#+begin_src python
 from collections import Counter
 
 
@@ -99,5 +81,3 @@ def test():
 
 if __name__ == "__main__":
     test()
-
-#+end_src

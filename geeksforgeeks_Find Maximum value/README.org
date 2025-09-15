@@ -1,0 +1,42 @@
+* Question
+
+** Find Maximum value
+
+*** Description
+Given an array arr[] you have to find the maximum value of abs(i – j) *min(arr[i], arr[j]) where i and j vary from 0 to n-1 and i != j.
+
+*** Examples
+#+begin_example
+Input: arr[] = [3, 2, 1, 4]
+Output: 9
+Explanation: Here, a[0] = 3 and a[3] = 4 and thus result is abs(0-3)*min(3,4) = 9.
+#+end_example
+
+*** Solution
+
+1. 双指针
+
+   #+begin_src python :results output
+class Solution:
+    def maxValue(self, arr):
+        left = 0
+        right = len(arr) - 1
+
+        ans = 0
+
+        while left < right:
+            ans = max(ans, (right - left) * (min(arr[left], arr[right])))
+
+            if arr[left] < arr[right]:
+                left += 1
+            else:
+                right -= 1
+        return ans
+
+
+print(Solution().maxValue([8, 1, 9, 4]))
+
+   #+end_src
+
+   #+RESULTS:
+   : 16

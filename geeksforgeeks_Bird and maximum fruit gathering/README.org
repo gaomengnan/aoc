@@ -1,0 +1,14 @@
+* Question
+** Bird and maximum fruit gathering
+*** Description
+There are several trees, each with a fruit value associated with it. A bird can gather all the fruits from a tree by sitting on it for 0.5 seconds and can move to a neighboring tree in another 0.5 seconds. Once all the fruits are picked from a tree, the bird cannot pick any more from that tree until all fruits are picked, it cannot move to next tree. The bird has totalTime seconds to gather as many fruits as possible and can start from any tree. Given the array arr[] of fruit values and totalTime, determine the maximum number of fruits the bird can gather.
+
+#+begin_example
+input: arr[] = [2, 1, 3, 5, 0, 1, 4], totalTime = 3
+Output: 9
+Explanation: Starting at tree 1 and moving to tree 2, then to tree 3, the bird gathers 1 + 3 + 5 = 9 fruits.
+#+end_example
+
+#+begin_src  python
+
+#+end_src

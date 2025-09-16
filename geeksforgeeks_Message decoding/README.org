@@ -1,0 +1,15 @@
+* Question
+** Message decoding
+
+*** Description
+
+Given a string S, check whether it can be converted into the string "hello" by deleting some characters from it.
+Note : S can have both uppercase and lowercase letters.
+
+#+begin_example
+Input:
+S = "bbbbbxxhhelllllooudd"
+Output: 1
+Explanation: The string hello is marked
+in bold: bbbbbxxhhelllllooudd
+#+end_example

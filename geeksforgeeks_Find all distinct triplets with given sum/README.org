@@ -1,0 +1,64 @@
+* Question
+
+** Find all distinct triplets with given sum
+
+*** Description
+
+Given an array arr[], and an integer target, find all possible unique triplets in the array whose sum is equal to the given target value. We can return triplets in any order, but all the returned triplets should be internally sorted, i.e., for any triplet [q1, q2, q3], the condition q1 ≤ q2 ≤ q3 should hold.
+
+*** Examples
+
+#+begin_example
+Input: arr[] = [12, 3, 6, 1, 6, 9], target = 24
+Output: [[3, 9, 12], [6, 6, 12]]
+Explanation: Triplets with sum 24 are (3, 9, 12) and (6, 6, 12).
+#+end_example
+
+*** Solution
+
+1. 双指针
+
+   #+begin_src python
+# User function Template for python3
+class Solution:
+    def threeSum(self, arr, target):
+        arr.sort()
+
+        n = len(arr)
+
+        ans = []
+
+        for i in range(n - 2):
+            if i > 0 and arr[i] == arr[i - 1]:
+                continue
+            k = i + 1
+            j = n - 1
+
+            while k < j:
+                totalS = arr[i] + arr[k] + arr[j]
+
+                if totalS == target:
+                    ans.append([arr[i], arr[k], arr[j]])
+
+                    # 跳过重复的 k
+                    while k < j and arr[k] == arr[k + 1]:
+                        k += 1
+                    # 跳过重复的 j
+                    while k < j and arr[j] == arr[j - 1]:
+                        j -= 1
+
+                    k += 1
+                    j -= 1
+                elif totalS < target:
+                    k += 1
+                else:
+                    j -= 1
+        return ans
+
+
+print(Solution().threeSum([12, 3, 6, 1, 6, 9], 24))
+
+   #+end_src
+
+   #+RESULTS:
+   : None

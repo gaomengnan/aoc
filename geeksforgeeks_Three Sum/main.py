@@ -16,6 +16,13 @@ class Solution:
                 total = arr[i] + arr[x] + arr[y]
                 if total == 0:
                     ans.append([arr[i], arr[x], arr[y]])
+
+                    while x < y and arr[x] == arr[x + 1]:
+                        x += 1
+                    while x < y and arr[y] == arr[y + 1]:
+                        y -= 1
+
+                    x += 1
                     y -= 1
                 elif total < 0:
                     x += 1

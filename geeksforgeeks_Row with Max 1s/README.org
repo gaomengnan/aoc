@@ -1,0 +1,31 @@
+* Qeustion
+
+** Row with Max 1s
+
+*** Description
+
+Given a 2D binary matrix mat[][] of size n x m, where each row contains only 0s and 1s, and each row is sorted in non-decreasing order (all the 0s come before any 1s).
+Find the index of the row that contains the highest number of 1s.
+
+Note: If multiple rows have the same maximum count of 1s, return the row with the smallest index.
+
+*** Examples
+
+#+begin_example
+Input: mat[][] = [[0, 0, 1, 1],
+                [0, 1, 1, 1],
+                [0, 0, 0, 1]]
+Output: 1
+Explanation: Row at index 1 has three 1s, which is the highest among all rows.
+#+end_example
+
+
+*** Solution
+
+1. 双指针
+
+#+begin_src python
+
+
+
+#+end_src

@@ -1,0 +1,22 @@
+* Question
+
+** Count Pairs in a sorted array whose sum is less than target
+
+*** Description
+
+Given an array arr[] and an integer target. You have to find the number of pairs in the array whose sum is strictly less than the target.
+
+#+begin_example
+Input: arr[] = [2, 3, 5, 7], target = 8
+Output: 2
+Explanation: The pairs are (2, 3) and (2, 5).
+#+end_example
+
+*** Solution
+
+1. 双指针
+
+
+#+begin_src
+
+#+end_src

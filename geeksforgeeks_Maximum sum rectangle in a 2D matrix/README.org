@@ -1,0 +1,21 @@
+#+title: Maximum sum rectangle in a 2D matrix
+
+*** Description
+
+Given a 2D matrix mat[][] of integers, find the submatrix (i.e., a rectangular section of the matrix) that has the maximum possible sum among all possible submatrices.
+
+*** Examples
+#+begin_example
+Input: mat[][] = [[1, 2, -1, -4, -20],
+                            [-8, -3, 4, 2, 1],
+                           [3, 8, 10, 1, 3],
+                          [-4, -1, 1, 7, -6]]
+Output: 29
+Explanation: The matrix is as follows and the green rectangle denotes the maximum sum rectangle which is equal to 29.
+#+end_example
+
+*** Solution
+
+#+begin_src c
+
+#+end_src

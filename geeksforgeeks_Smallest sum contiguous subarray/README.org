@@ -1,0 +1,14 @@
+#+title: Smallest sum contiguous subarray
+
+*** Description
+
+Given an array arr[] of N integers. Find the contiguous sub-array(containing at least one number) which has the minimum sum and return its sum.
+
+*** Examples
+#+begin_example
+Input:
+arr[] = {3,-4, 2,-3,-1, 7,-5}
+Output: -6
+Explanation: sub-array which has smallest
+sum among all the sub-array is {-4,2,-3,-1} = -6
+#+end_example

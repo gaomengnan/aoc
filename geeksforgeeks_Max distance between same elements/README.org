@@ -1,0 +1,50 @@
+#+title: Max distance between same elements
+
+*** Description
+
+Given an array arr[], the task is to find the maximum distance between two occurrences of an element. If no element has two occurrences, then return 0.
+
+*** Examples
+#+begin_example
+Input: arr[] = [1, 1, 2, 2, 2, 1]
+Output: 5
+Explanation: distance for 1 is: 5-0 = 5, distance for 2 is : 4-2 = 2, So max distance is 5.
+#+end_example
+
+*** Solution
+
+#+begin_src c
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+
+using namespace std;
+
+class Solution {
+public:
+  int maxDistance(vector<int> &arr) {
+
+    int ans = 0;
+    unordered_map<int, int> mp;
+
+    for (int i = 0; i < arr.size(); i++) {
+      int x = arr[i];
+
+      if (mp.find(x) != mp.end()) {
+        ans = max(ans, i - (mp.find(x)->second));
+      }
+      if (mp.find(x) == mp.end()) {
+        mp[x] = i;
+      }
+    }
+    return ans;
+  }
+};
+int main() {
+  Solution sol;
+  vector<int> arr = {3, 2, 1, 2, 1, 4, 5, 8, 6, 7, 4, 2};
+  cout << sol.maxDistance(arr) << endl; // Example usage
+  return 0;
+}
+
+#+end_src

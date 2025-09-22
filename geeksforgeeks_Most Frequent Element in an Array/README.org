@@ -1,0 +1,20 @@
+#+title: Most Frequent Element in an Array
+
+***  Descirption
+
+You are given an integer array arr[]. You need to return the element which occurs maximum times in arr[].
+Note: If multiple such elements exists return the maximum element.
+
+*** Examples
+
+#+begin_example
+Input: arr[] = [1, 2, 2, 2, 4, 1]
+Output: 2
+Explanation: 2 is most frequent element of this array with 3 occurrences.
+#+end_example
+
+*** Solution
+
+#+begin_src c
+
+#+end_src

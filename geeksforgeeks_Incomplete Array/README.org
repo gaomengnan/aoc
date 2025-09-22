@@ -1,0 +1,13 @@
+#+title: Incomplete Array
+
+*** Description
+
+Given an integer array arr[], the task is to find how many elements should be added such that all elements between the maximum element and minimum element are present in the array.
+
+*** Examples
+
+#+begin_example
+Input: arr[] = [205, 173, 102, 324, 957]
+Output: 851
+Explanation: The maximum element is 957 and the minimum element is 102. Total elements from 102 to 957 = 854, out of which 3 are already present. So answer is 851.
+#+end_example

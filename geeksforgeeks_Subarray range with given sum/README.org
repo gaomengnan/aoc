@@ -1,0 +1,57 @@
+* DONE Subarray range with given sum
+
+*** 描述
+
+给定一个无序整数数组 arr[] 和一个目标值 tar，统计有多少个连续子数组的元素之和等于 tar。
+
+
+*** 示例
+
+#+begin_example
+arr[] = [10, 2, -2, -20, 10] , tar = -10
+输出: 3
+解释: 和为 -10 的子数组有: [10, 2, -2, -20], [2, -2, -20, 10], [-20, 10]
+#+end_example
+
+
+*** 思路
+
+使用前缀和 + 哈希表（unordered_map）。核心思想：如果当前前缀和为 pre，目标是 tar，则需要找之前出现过多少个前缀和等于 pre - tar。
+
+1. 维护滚动前缀和 pre。
+2. 若 pre == tar，则说明从 0 到当前位置的子数组满足条件，答案加 1。
+3. 计算 need = pre - tar，若 need 之前出现过 c 次，则再加 c。
+4. 记录当前前缀和出现次数。
+
+正确性：对任意 i < j，区间 (i+1..j) 的和 = pref[j] - pref[i]。若 pref[i] = pref[j] - tar，则该区间和为 tar。
+
+时间复杂度：O(n)
+空间复杂度：最坏 O(n)
+
+*** Code
+
+#+begin_src cpp
+class Solution {
+public:
+  int subArraySum(vector<int> &arr, int tar) {
+    unordered_map<int,int> mp; // prefix sum -> frequency
+    int pre_sum = 0;
+    int ans = 0;
+    for (int x : arr) {
+      pre_sum += x;
+      if (pre_sum == tar) ans += 1; // subarray from start
+      int need = pre_sum - tar;
+      if (mp.find(need) != mp.end()) ans += mp[need];
+      mp[pre_sum]++;
+    }
+    return ans;
+  }
+};
+#+end_src
+
+*** 复杂度
+- 时间：O(n)
+- 空间：O(n)
+
+*** 说明
+可包含负数：前缀和差分形式不受正负影响，只要存在 pref[j]-pref[i]=tar 即成立。

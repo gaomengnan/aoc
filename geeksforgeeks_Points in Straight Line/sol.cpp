@@ -1,0 +1,96 @@
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+using namespace std;
+
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+  int maxPoints(int X[], int Y[], int N)
+
+  {
+
+    int ans = 0;
+
+    for (int i = 0; i < N; i++)
+
+    {
+
+      unordered_map<double, int> m;
+
+      double x;
+
+      for (int j = 0; j < N; j++)
+
+      {
+
+        if (i != j)
+
+        {
+
+          if (X[j] - X[i] == 0)
+
+            x = INT_MAX;
+
+          else
+
+            x = double(Y[j] - Y[i]) / double(X[j] - X[i]);
+
+          m[x]++;
+
+          ans = max(ans, m[x]);
+        }
+      }
+    }
+
+    return ans + 1;
+  }
+};
+
+int main() {
+  Solution sol;
+
+  // 测试用例1：所有点在同一直线
+  vector<int> x1 = {1, 2, 3};
+  vector<int> y1 = {1, 2, 3};
+  cout << "Test 1: " << sol.maxPoints(x1.data(), y1.data(), 3) << endl;
+
+  // 测试用例2：没有点
+  vector<int> x2 = {};
+  vector<int> y2 = {};
+  cout << "Test 2: " << sol.maxPoints(x2.data(), y2.data(), 0) << endl;
+
+  // 测试用例3：只有一个点
+  vector<int> x3 = {5};
+  vector<int> y3 = {10};
+  cout << "Test 3: " << sol.maxPoints(x3.data(), y3.data(), 1) << endl;
+
+  // 测试用例4：只有两个点
+  vector<int> x4 = {0, 0};
+  vector<int> y4 = {0, 1};
+  cout << "Test 4: " << sol.maxPoints(x4.data(), y4.data(), 2) << endl;
+
+  // 测试用例5：多点但不共线
+  vector<int> x5 = {1, 2, 3, 4};
+  vector<int> y5 = {1, 2, 1, 2};
+  cout << "Test 5: " << sol.maxPoints(x5.data(), y5.data(), 4) << endl;
+
+  // 测试用例6：多点部分共线
+  vector<int> x6 = {1, 2, 3, 4, 5};
+  vector<int> y6 = {2, 4, 6, 8, 10}; // 这些点都在 y=2x 直线上
+  cout << "Test 6: " << sol.maxPoints(x6.data(), y6.data(), 5) << endl;
+
+  // 测试用例7：边界情况（大坐标值）
+  vector<int> x7 = {100000, 200000, 300000};
+  vector<int> y7 = {100000, 200000, 300000};
+  cout << "Test 7: " << sol.maxPoints(x7.data(), y7.data(), 3) << endl;
+
+  // 测试用例8：有重复点
+  vector<int> x8 = {1, 1, 2, 2, 3, 3};
+  vector<int> y8 = {1, 1, 2, 2, 3, 3};
+  cout << "Test 8: " << sol.maxPoints(x8.data(), y8.data(), 6) << endl;
+}

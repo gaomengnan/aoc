@@ -1,0 +1,23 @@
+* TODO Find number of Employees Under every Manager
+
+*** Desc
+
+Given a 2d matrix of strings arr[][] of order n * 2, where each array arr[i] contains two strings, where the first string arr[i][0] is the employee and arr[i][1] is his manager. The task is to find the count of the number of employees under each manager in the hierarchy and not just their direct reports.
+
+Note: Every employee reports to only one manager. And the CEO reports to himself. Print the result in sorted order based on employee name.
+
+
+*** Examples
+
+#+begin_example
+Input: arr[][] = [[A, C], [B, C], [C, F], [D, E], [E, F], [F, F]]
+Output: [[A, 0], [B, 0], [C, 2], [D, 0], [E, 1], [F, 5]]
+Explanation: 'A' and 'B' are reporting to 'C', thus for 'C' the count is 2. And 'D' is reporting to 'E', thus for 'E' the count is 1. 'C' and 'E' reporting to 'F' . Thus count for 'F' is 5 ( 2 under 'C'+ 1 under 'E' + 'C' + 'E' )  . And no employees are reporting 'A', 'B', and 'D', so the count for them is 0.
+#+end_example
+
+
+*** Approach
+
+#+begin_quote
+The idea is to store all the employees working under the manager in a HashMap, and then find the count of employees under each manager, and at last sum them all to find the count of direct and indirect employees working under any manager. To do so, first create a HashMap to store the employees under every manager. Also, create a HashMap to store the results. Now start traversal from any of the employee, and perform DFS to find the count of all the employees. Find the sum of all the direct and indirect employees and store the sum in results. At last, store the results in an array in the pairs of employee and the count of employees working under him.
+#+end_quote

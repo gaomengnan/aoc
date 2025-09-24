@@ -1,0 +1,50 @@
+#+title: Split array into minimum subsets
+
+*** Desc
+Given an array arr[] of distinct positive numbers. Split the array into the minimum number of subsets (or subsequences) such that each subset contains consecutive numbers.
+
+*** Examples
+
+#+begin_example
+Input: arr = [100, 56, 5, 6, 102, 58, 101, 57, 7, 103, 59]
+Output: 3
+Explanation: [5, 6, 7], [56, 57, 58, 59], [100, 101, 102, 103] are 3 subsequences in which numbers are consecutive.
+#+end_example
+
+*** Approach
+
+1. 排序
+
+#+begin_src c
+
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+// User function Template for C++
+class Solution {
+public:
+  int minSubsets(vector<int> &arr) {
+    sort(arr.begin(), arr.end());
+    int ans = 0;
+
+    for (int i = 0; i < arr.size()-1; i++) {
+      if (arr[i + 1] - arr[i] > 1) {
+        ans++;
+      }
+    }
+    return ans + 1;
+  }
+};
+
+int main() {
+  Solution sol;
+  vector<int> arr = {1, 2, 3, 4, 5, 7};
+  cout << sol.minSubsets(arr) << endl;
+  return 0;
+}
+
+#+end_src

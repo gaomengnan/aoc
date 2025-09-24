@@ -1,0 +1,69 @@
+#+title: Count distinct elements in every window
+
+*** Desc
+Given an integer array arr[] and a number k. Find the count of distinct elements in every window of size k in the array.
+
+*** Examples
+#+begin_example
+Input: arr[] = [1, 2, 1, 3, 4, 2, 3], k = 4
+Output: [3, 4, 4, 3]
+Explanation:
+First window is [1, 2, 1, 3], count of distinct numbers is 3.
+Second window is [2, 1, 3, 4] count of distinct numbers is 4.
+Third window is [1, 3, 4, 2] count of distinct numbers is 4.
+Fourth window is [3, 4, 2, 3] count of distinct numbers is 3.
+#+end_example
+
+
+*** Approach
+
+1. 滑动窗口
+
+   #+begin_src c
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+  vector<int> countDistinct(vector<int> &arr, int k) {
+    int n = arr.size();
+    unordered_map<int, int> mp;
+    vector<int> ans;
+
+    int l = 0;
+
+    for (int i = 0; i < n; i++) {
+      mp[arr[i]]++;
+      while (i - l >= k) {
+        mp[arr[l]]--;
+        if (mp[arr[l]] == 0) {
+          mp.erase(arr[l]);
+        }
+        l++;
+      }
+
+      if (i - l + 1 == k) {
+        ans.push_back(mp.size());
+      }
+    }
+
+    return ans;
+  }
+};
+
+int main() {
+  Solution sol;
+  vector<int> arr = {1, 1, 1, 1, 1};
+  int k = 3;
+  vector<int> result = sol.countDistinct(arr, k);
+  for (int num : result) {
+    cout << num << " ";
+  }
+  cout << endl;
+  return 0;
+}
+
+   #+end_src

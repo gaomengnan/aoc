@@ -1,0 +1,87 @@
+#+title: Maximum array from two given arrays keeping order same
+
+*** Desc
+We are given two arrays of equal size n, where each array contains distinct elements individually but may share some common elements. The task is to form a third array res[] of size n, selecting elements from both arrays. Elements from the first array should be included first in their original order, followed by elements from the second array. If an element appears in both arrays, it should be added only once, giving priority to the first array.
+
+**** Examples
+#+begin_example
+    Input: a[] = [9, 7, 2, 3, 6], b[] = [7, 4, 8, 0, 1]
+    Output: [9, 7, 6, 4, 8]
+    Explanation: Start with elements from a[]: 9, 7, 2, 3, 6. Remove duplicates later if they appear again in b[] (7 is already taken). Now consider b[]: skip 7 (already added), then take 4 and 8. Stop once we have 5 unique elements.
+
+    Input: a[] = [6, 7, 5, 3], b[] = [5, 6, 2, 9]
+    Output: [6, 7, 5, 9]
+    Explanation: Start with elements from a[]: 6, 7, 5, 3. We now have 4 elements, but we skip 3 to allow space for unique ones from b[]. From b[], skip 5 and 6 (already taken), then take 9. Now we have 4 unique elements in total.
+#+end_example
+
+*** Approach
+1. 首先临时数组进行排序统计出前n个最大的数
+   然后分别遍历 a ,b 找出在map 中且非重复的数
+#+begin_src c
+#include <algorithm>
+#include <print>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+vector<int> maximizeTheFirstArray(vector<int> &a, vector<int> &b) {
+  vector<int> res;
+  unordered_map<int, int> mps;
+  // 排序
+  vector<int> a1 = a;
+  vector<int> b1 = b;
+
+  sort(a1.begin(), a1.end(), greater<int>());
+  sort(b1.begin(), b1.end(), greater<int>());
+
+  int i = 0;
+  int j = 0;
+
+  while (true) {
+    if (a1[i] >= b1[j]) {
+      mps[a1[i]]++;
+      if (mps.size() > a.size()) {
+        mps.erase(a1[i]);
+        break;
+      }
+
+      i++;
+    } else {
+      mps[b1[j]]++;
+      if (mps.size() > a.size()) {
+        mps.erase(b1[j]);
+        break;
+      }
+
+      j++;
+    }
+  }
+  for (int i = 0; i < a.size(); i++) {
+    if (mps.find(a[i]) != mps.end()) {
+      res.push_back(a[i]);
+    }
+  }
+
+  for (int i = 0; i < b.size(); i++) {
+    if (mps.find(b[i]) != mps.end() && mps[b[i]] == 1) {
+      res.push_back(b[i]);
+    }
+  }
+
+  println("mps is {}", mps);
+  println("a is {}", a1);
+  println("b is {}", b1);
+  println("res is {}", res);
+
+  return res;
+}
+int main() {
+  vector<int> a = {6, 7, 5, 3};
+  vector<int> b = {5, 6, 2, 9};
+  vector<int> res = maximizeTheFirstArray(a, b);
+  println("res is {}", res);
+  return 0;
+}
+
+#+end_src

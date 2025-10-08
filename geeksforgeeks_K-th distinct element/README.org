@@ -1,0 +1,59 @@
+#+title: K-th distinct element
+
+*** Desc
+
+Given an array of n integers. Find the kth distinct element.
+
+#+begin_example
+Input:
+n = 6, k = 2
+arr = {1, 2, 1, 3, 4, 2}
+Output:
+4
+Explanation: 1st distinct element will be 3
+and the 2nd distinct element will be 4. As
+both the elements present in the array only 1
+times.
+#+end_example
+
+*** Approach
+
+#+begin_src c
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+  int KthDistinct(vector<int> nums, int k) {
+    unordered_map<int, int> mp;
+    int n = nums.size();
+
+    for (int i = 0; i < n; i++) {
+      mp[nums[i]]++;
+    }
+
+    for (int i = 0; i < n; i++) {
+      if (mp[nums[i]] == 1) {
+        k--;
+        if (k == 0) {
+          return nums[i];
+        }
+      }
+    }
+
+    return -1;
+  }
+};
+
+int main() {
+  Solution sol;
+  vector<int> nums = {1, 2, 50, 10, 20, 2};
+  int k = 3;
+  cout << sol.KthDistinct(nums, k) << endl; // Example usage
+  return 0;
+}
+
+#+end_src

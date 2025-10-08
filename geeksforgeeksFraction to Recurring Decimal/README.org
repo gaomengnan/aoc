@@ -1,0 +1,85 @@
+#+title: Fraction to Recurring Decimal
+
+*** Desc
+Given two integers a and b(b != 0), the task is to return the fraction a/b in string format. If the fractional part is repeating, enclose the repeating part in parentheses.
+
+#+begin_example
+    Input: a = 1, b = 2
+    Output: "0.5"
+    Explanation: 1/2 = 0.5 with no repeating part.
+
+    Input: a = 50, b = 22
+    Output: "2.(27)"
+    Explanation: 50/22 = 2.27272727... Since fractional part (27) is repeating, it is enclosed in parentheses.
+#+end_example
+
+
+*** Aproach
+
+1. 先算出整数部分
+2. 计算小数部分
+   a / b
+   loop:
+    小数位 = 余数 * 10 / b
+    余数 = 余数*10 % b
+
+   #+begin_src c
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+#define ll long long
+
+class Solution {
+public:
+  string calculateFraction(int a, int b) {
+    unordered_map<int, int> remainderPos;
+    string result;
+
+    long long x = llabs((long long)a);
+    long long y = llabs((long long)b);
+
+    ll intpart = x / y;
+
+    ll remainder = x % y;
+    // ll startLop = -1;
+    // ll endLop = 0;
+    result += to_string(intpart);
+    if (remainder != 0) {
+      result.push_back('.');
+    }
+
+    while (remainder != 0) {
+      // ll p = (remainder * 10) / b;
+      // ll nl = remainder * 10 - p * b;
+
+      if (remainderPos.count(remainder)) {
+        int pos = remainderPos[remainder];
+        result.insert(pos, 1, '(');
+        result.push_back(')');
+        break;
+      }
+
+      remainderPos[remainder] = result.size();
+
+      remainder *= 10;
+
+      int digit = remainder / y;
+
+      result.push_back('0' + digit);
+
+      remainder %= y;
+    }
+    return result;
+  }
+};
+
+int main() {
+  Solution sol;
+  int a = 1, b = 4;
+  cout << sol.calculateFraction(a, b) << endl; // Output: "0.(3)"
+  return 0;
+}
+   #+end_src

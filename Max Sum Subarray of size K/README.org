@@ -1,0 +1,66 @@
+#+title: Max Sum Subarray of size K
+
+*** Desc
+Given an array of integers arr[]  and a number k. Return the maximum sum of a subarray of size k.
+
+Note: A subarray is a contiguous part of any given array.
+
+**** Exmaples
+
+#+begin_example
+Input: arr[] = [100, 200, 300, 400], k = 2
+Output: 700
+Explanation: arr2 + arr3 = 700, which is maximum.
+
+Input: arr[] = [1, 4, 2, 10, 23, 3, 1, 0, 20], k = 4
+Output: 39
+Explanation: arr1 + arr2 + arr3 + arr4 = 39, which is maximum.
+
+Input: arr[] = [100, 200, 300, 400], k = 1
+Output: 400
+Explanation: arr3 = 400, which is maximum.
+#+end_example
+
+*** Approach
+
+1. 滑动窗口
+   只要保持 i - j 一直等于K 向尾部滑动
+
+#+begin_src c
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+  int maxSubarraySum(vector<int> &arr, int k) {
+    int n = arr.size();
+    int ans = 0;
+
+    int win_sum = 0;
+    int j = 0;
+
+    for (int i = 0; i < n; i++) {
+      while ((i - j + 1) > k) {
+        win_sum -= arr[j];
+        j++;
+      }
+      win_sum += arr[i];
+      ans = max(win_sum, ans);
+    }
+    return ans;
+  }
+};
+
+int main() {
+  Solution sol;
+  vector<int> arr = {100, 200, 300, 400};
+  int k = 1;
+  cout << sol.maxSubarraySum(arr, k) << endl; // Output: 39
+  return 0;
+}
+
+#+end_src

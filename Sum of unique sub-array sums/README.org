@@ -1,0 +1,77 @@
+#+title: Sum of unique sub-array sums
+
+*** Desc
+Given an array of n-positive elements. The sub-array sum is defined as the sum of all elements of a particular sub-array, the task is to find the sum of all unique sub-array sum.
+
+Note: Unique Sub-array sum means no other sub-array will have the same sum value.
+
+**** Examples
+
+#+begin_example
+    Input : arr[] = {3, 4, 5}
+    Output : 40
+    Explanation: All possible unique sub-array with their sum are as:
+    (3), (4), (5), (3+4), (4+5), (3+4+5). Here all are unique so required sum = 40
+
+    Input : arr[] = {2, 4, 2}
+    Output : 12
+    Explanation: All possible unique sub-array with their sum are as:
+    (2), (4), (2), (2+4), (4+2), (2+4+2). Here only (4) and (2+4+2) are unique.
+#+end_example
+
+
+*** Approach
+1. 两层循环计算和之后进行排序 然后去掉重复的数据
+
+#+begin_src c
+#include <iostream>
+#include <print>
+#include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+int findSubarraySum(vector<int> &arr) {
+  int n = arr.size();
+  vector<int> mp;
+  for (int i = 0; i < n; i++) {
+    int sum = 0;
+    for (int j = i; j < n; j++) {
+      sum += arr[j];
+      mp.push_back(sum);
+    }
+  }
+  // println("mp is {}", mp);
+
+  sort(mp.begin(), mp.end());
+
+  int m = mp.size();
+
+  if (m == 1)
+    return mp[0];
+  int total = 0;
+  if (mp[0] != mp[1]) {
+    total += mp[0];
+  }
+
+  for (int i = 1; i < m - 1; i++) {
+    if (mp[i] != mp[i + 1] && mp[i] != mp[i - 1]) {
+      total += mp[i];
+    }
+  }
+  if (mp[m-1] != mp[m-2]) {
+    total += mp[m-1];
+  }
+  // println("total is {}", total);
+
+  return total;
+}
+
+int main() {
+  vector<int> arr = {3, 2, 3, 1, 4};
+  cout << findSubarraySum(arr);
+  return 0;
+}
+
+#+end_src

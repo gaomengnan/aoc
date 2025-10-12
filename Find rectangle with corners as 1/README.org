@@ -1,0 +1,22 @@
+#+title: Find rectangle with corners as 1
+
+*** Desc
+Given an n x m binary matrix mat[][] containing only 0s and 1s, determine if there exists a rectangle within the matrix such that all four corners of the rectangle are 1. If such a rectangle exists, return true; otherwise, return false.
+
+#+begin_example
+Input: mat[][] =
+[[1, 0, 0, 1, 0],
+[0, 0, 1, 0, 1],
+[0, 0, 0, 1, 0],
+[1, 0, 1, 0, 1]]
+Output: true
+Explanation: Valid corners are at index (1,2), (1,4), (3,2), (3,4)
+#+end_example
+
+*** Approach
+
+1. O(n*m)
+
+   #+begin_src c
+
+   #+end_src

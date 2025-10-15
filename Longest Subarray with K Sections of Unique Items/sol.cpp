@@ -40,8 +40,8 @@ int maxElements(vector<int> &arr, int k) {
 // int main() { Solution sol; }
 int main() {
 
-  vector<int> arr = {5, 5, 5, 5, 5};
-  int k = 1;
+  vector<int> arr = {1, 2, 2, 3, 1, 4};
+  int k = 2;
 
   cout << maxElements(arr, k) << endl;
 

@@ -1,0 +1,68 @@
+#+title: Binary subarray with sum
+
+
+*** Desc
+
+Given a binary array arr[] and an integer target, return the number of non-empty subarrays with a sum equal to the target.
+Note: A subarray is the contiguous part of the array.
+
+
+**** Examples
+
+#+begin_example
+Input: arr[] = [1, 0, 1, 0, 1], target = 2
+Output: 4
+Explanation: There are four subarrays with sum equal to target: arr[0..2], arr[0..3], arr[1..4], arr[2..4].
+#+end_example
+
+*** Approach
+
+#+begin_src c
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+  int numberOfSubarrays(vector<int> &arr, int target) {
+    int n = arr.size();
+    unordered_map<int, int> mp;
+    int win_sum = 0;
+    int left = 0;
+    int ans = 0;
+
+    for (int r = 0; r < n; ++r) {
+      win_sum += arr[r];
+      while (win_sum > target) {
+        win_sum -= arr[left];
+        left++;
+      }
+
+      if (win_sum == target) {
+        ans++;
+        int left2 = left;
+        while(win_sum - arr[left2] == target) {
+            ans++;
+            left2++;
+        }
+      }
+    }
+
+    return ans;
+  }
+};
+
+int main() {
+  vector<int> arr = {1, 1, 0, 1, 1};
+  int target = 2;
+
+  Solution sol;
+  cout << sol.numberOfSubarrays(arr, target) << endl;
+
+  return 0;
+}
+
+#+end_src

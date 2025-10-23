@@ -1,0 +1,63 @@
+#+title: Rearrange to Make arr[i] = i
+
+*** Desc
+
+Given a permutation of size n. The range of values for the array elements is from 0 to n-1. All elements may not be present in the array. If the element is not present then there will be -1 present in the array. Rearrange the array such that arr[i] = i and if arr[i] is not present then -1 at that place. Index i is 0-based
+
+
+**** Examples
+
+#+begin_example
+Input: arr[] = [-1, -1, 6, 1, 9, 3, 2, -1, 4, -1]
+Output: [-1, 1, 2, 3, 4, -1, 6, -1, -1, 9]
+Explanation: In range 0 to 9, all except 0, 5, 7 and 8 are present. Hence, we print -1 instead of them.
+
+Input: arr[] = [0, 1, 2, 3, 4, 5]
+Output: [0, 1, 2, 3, 4, 5]
+Explanation: In range 0 to 5, all number are present.
+#+end_example
+
+
+*** Approach
+1. 使用set 将输入数组转成map形式后面好检索
+   通过遍历 0-n-1 判断当前位置是否存在map 中然后重置arr里面值
+
+#+begin_src c
+#include <algorithm>
+#include <print>
+#include <vector>
+#include <unordered_map>
+#include <unordered_set>
+using namespace std;
+
+class Solution {
+public:
+  void modifyArray(vector<int> &arr) {
+    int n = arr.size();
+    unordered_set<int> freq;
+
+    for (int i = 0; i < n; i++) {
+        freq.insert(arr[i]);
+    }
+    for (int i = 0; i < n; i++) {
+        if (freq.find(i) != freq.end()) {
+            arr[i] = i;
+        }else{
+            arr[i] = -1;
+        }
+    }
+    // sort(arr.begin(), arr.end());
+    // println("arr sorted is {}", arr);
+    return;
+  }
+};
+
+int main() {
+  Solution sol;
+  vector<int> arr = {-1, -1, 6, 1, 9, 3, 2, -1, 4, -1};
+  sol.modifyArray(arr);
+  println("arr res Is {}", arr); // Output should be a sorted array: [1, 2, 3, 5, 8]
+  return 0;
+}
+
+#+end_src

@@ -1,0 +1,76 @@
+#+title: Maximum Circular Subarray Sum
+
+*** Desc
+
+Given a circular array arr[], find the maximum sum of any non-empty subarray. A circular array allows wrapping from the end back to the beginning.
+Note: A subarray may wrap around the end and continue from the beginning, forming a circular segment.
+
+**** Examples
+
+#+begin_example
+Input: arr[] = [8, -8, 9, -9, 10, -11, 12]
+Output: 22
+Explanation: The circular subarray [12, 8, -8, 9, -9, 10] gives the maximum sum, which is 22.
+
+Input: arr[] = [4, -1, -2, 3]
+Output: 7
+Explanation: The circular subarray [3, 4] gives the maximum sum of 7.
+
+Input: arr[] = [5, -2, 3, 4]
+Output: 12
+Explanation: The circular subarray [3, 4, 5] gives the maximum sum of 12.
+#+end_example
+
+*** Approach
+
+1. 卡档算法
+#+begin_src c
+#include <algorithm>
+#include <iostream>
+#include <print>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+  int maxCircularSum(vector<int> &arr) {
+    // code here
+    int n = arr.size();
+    int cur_max = 0;
+    int cur_min = 0;
+    int max_val = arr[0];
+    int min_val = arr[0];
+
+    int total = 0;
+
+    for (int i = 0; i < n; i++) {
+      cur_max += arr[i];
+      cur_min += arr[i];
+
+      max_val = max(max_val, cur_max);
+      min_val = min(min_val, cur_min);
+
+      if (cur_max < 0) {
+        cur_max = 0;
+      }
+      if (cur_min > 0) {
+        cur_min = 0;
+      }
+      total += arr[i];
+    }
+    if (total < 0) {
+      return max_val;
+    }
+    return max(max_val, total - min_val);
+  }
+};
+
+int main() {
+  Solution sol;
+  vector<int> arr = {8, -8, 9, -9, 10, -11, 12};
+  cout << sol.maxCircularSum(arr) << endl; // Expected output: 12
+  return 0;
+}
+#+end_src

@@ -1,0 +1,83 @@
+#+title: Count the number of possible triangles
+
+*** Desc
+
+Given an integer array arr[]. Find the number of triangles that can be formed with three different array elements as lengths of three sides of the triangle. A triangle with three given sides is only possible if sum of any two sides is always greater than the third side.
+
+
+**** Examples
+
+#+begin_example
+Input: arr[] = [4, 6, 3, 7]
+Output: 3
+Explanation: There are three triangles possible [3, 4, 6], [4, 6, 7] and [3, 6, 7]. Note that [3, 4, 7] is not a possible triangle.
+
+Input: arr[] = [10, 21, 22, 100, 101, 200, 300]
+Output: 6
+Explanation: There can be 6 possible triangles: [10, 21, 22], [21, 100, 101], [22, 100, 101], [10, 100, 101], [100, 101, 200] and [101, 200, 300].
+
+Input: arr[] = [1, 2, 3]
+Output: 0
+Explanation: No triangles are possible.
+#+end_example
+
+
+*** Approach
+
+1 两层循环
+中间使用二分查找
+
+#+begin_src c
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+  int countTriangles(vector<int> &arr) {
+    // code here
+    int n = arr.size();
+    int ans = 0;
+    sort(arr.begin(), arr.end());
+
+    for (int i = 0; i < n - 2; i++) {
+      for (int j = i + 1; j < n - 1; j++) {
+        int x = arr[i] + arr[j];
+        int right = n;
+        int left = j + 1;
+        while (left <= right) {
+          int mid = left + (right - left) / 2;
+
+          // 找出第一个大于x 的值后面就是满足条件的值
+          if (x <= arr[mid]) {
+            // 查找左边是否有小于 x 的数字
+            right = mid - 1;
+
+          } else {
+            // 查找左边哪个开始大于x
+            left = mid + 1;
+          }
+        }
+        if (right > n-1) {
+          right = n-1;
+        }
+        ans += right - j;
+      }
+    }
+
+    return ans;
+  }
+};
+
+// int main() {
+//   Solution sol;
+//   //  3 4 6 7
+//   vector<int> arr = {10, 21, 22, 100, 101, 200, 300};
+//   cout << sol.countTriangles(arr) << endl; // Output: 4
+//   return 0;
+// }
+
+#+end_src

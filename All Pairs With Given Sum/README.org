@@ -1,0 +1,82 @@
+#+title: All Pairs With Given Sum
+
+*** Desc
+Given a 0 indexed array arr[] and a target value, the task is to find all possible indices (i, j) of pairs (arr[i], arr[j]) whose sum is equal to target and i != j.
+
+Note: Return the list of pairs sorted lexicographically by the first element, and then by the second element if necessary.
+
+
+**** Examples
+#+begin_example
+Input: arr[] = [10, 20, 30, 20, 10, 30], target = 50
+Output: [[1, 2], [1, 5], [2, 3], [3, 5]]
+Explanation: All pairs with sum = 50 are:
+arr[1] + arr[2] = 20 + 30 = 50
+arr[1] + arr[5] = 20 + 30 = 50
+arr[2] + arr[3] = 30 + 20 = 50
+arr[3] + arr[5] = 20 + 30 = 50
+
+Input: arr[] = [10, 20, 30, 20, 10, 30], target = 80
+Output: []
+Explanation: No pairs with sum = 80.
+#+end_example
+
+
+*** Approach
+
+#+begin_src c
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+// User function Template for C++
+class Solution {
+public:
+  vector<vector<int>> findAllPairs(vector<int> &arr, int target) {
+    // Code here
+
+    int n = arr.size();
+    vector<vector<int>> res;
+    unordered_map<int, vector<int>> mp;
+
+    for (int i = 0; i < n; ++i) {
+      int needed = target - arr[i];
+      if (mp.find(needed) != mp.end()) {
+        vector<int> sc = mp.find(needed)->second;
+
+        for (int j = 0; j < sc.size(); j++) {
+          res.push_back({sc[j], i});
+        }
+      }
+      mp[arr[i]].push_back(i);
+    }
+
+    sort(res.begin(), res.end(),
+         [](const vector<int> &a, const vector<int> &b) {
+           if (a[0] != b[0]) {
+             return a[0] < b[0]; // 先按第一个元素升序
+           }
+           return a[1] < b[1]; // 第一个相等时按第二个元素升序
+         });
+
+    return res;
+  }
+};
+
+int main() {
+  Solution sol;
+  vector<int> arr = {1, 2, 3, 4, 5};
+  int target = 5;
+  vector<vector<int>> result = sol.findAllPairs(arr, target);
+
+  for (const auto &pair : result) {
+    cout << "[" << pair[0] << ", " << pair[1] << "]" << endl;
+  }
+
+  return 0;
+}
+
+#+end_src

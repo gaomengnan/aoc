@@ -1,0 +1,80 @@
+#+title: All distinct pairs with given sum
+
+*** Desc
+
+Given an array arr[] and an integer target. You have to find all distinct pairs in array arr[] which sums up to given target.
+
+Note:
+(a, b) and (b, a) are considered the same. Also, the same numbers at different indices are considered same.
+Return the list of pairs sorted lexicographically by the first element, and then by the second element if necessary.
+
+
+**** Examples
+
+    #+begin_example
+Input: arr[] = [1, 5, 7, -1, 5], target = 6
+Output: [[1, 5], [-1, 7]]
+Explanation: Pairs with sum 6 are (1, 5) and (-1, 7).
+
+Input: arr[] = [1, 1, 1, 1], target = 2
+Output: [[1, 1]]
+Explanation: Pairs with sum 2 are (1, 1).
+
+Input: arr[] = [10, 12, 10, 15, -1], target = 125
+Output: []
+    #+end_example
+
+
+*** Approach
+    #+begin_src c
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+// User function Template for C++
+class Solution {
+public:
+  vector<vector<int>> distinctPairs(vector<int> &arr, int target) {
+    // Code here
+    int n = arr.size();
+    sort(arr.begin(), arr.end());
+    vector<vector<int>> res;
+
+    int l = 0;
+    int r = n - 1;
+    while (l < r) {
+      int sum = arr[l] + arr[r];
+      if (sum > target) {
+        r--;
+      } else if (sum < target) {
+        l++;
+      } else {
+        res.push_back({arr[l], arr[r]});
+        l++;
+        r--;
+        while (l < r && arr[l] == arr[l - 1])
+          l++;
+
+        while (l < r && arr[r] == arr[r + 1])
+          r--;
+      }
+    }
+    return res;
+  }
+};
+
+int main() {
+  Solution sol;
+  vector<int> arr = {10, 12, 10, 15, -1};
+  int target = 125;
+  vector<vector<int>> result = sol.distinctPairs(arr, target);
+  for (const auto &pair : result) {
+    cout << "[" << pair[0] << ", " << pair[1] << "] ";
+  }
+  cout << endl;
+  return 0;
+}
+    #+end_src

@@ -1,0 +1,68 @@
+#+title: Bitonic Point
+
+
+*** Desc
+
+Given an array of integers arr[] that is first strictly increasing and then maybe strictly decreasing, find the bitonic point, that is the maximum element in the array.
+Bitonic Point is a point before which elements are strictly increasing and after which elements are strictly decreasing.
+
+Note: It is guaranteed that the array contains exactly one bitonic point.
+
+**** Examples
+
+#+begin_example
+Input: arr[] = [1, 2, 4, 5, 7, 8, 3]
+Output: 8
+Explanation: Elements before 8 are strictly increasing [1, 2, 4, 5, 7] and elements after 8 are strictly decreasing [3].
+
+Input: arr[] = [10, 20, 30, 40, 50]
+Output: 50
+Explanation: Elements before 50 are strictly increasing [10, 20, 30 40] and there are no elements after 50.
+
+Input: arr[] = [120, 100, 80, 20, 0]
+Output: 120
+Explanation: There are no elements before 120 and elements after 120 are strictly decreasing [100, 80, 20, 0].
+#+end_example
+
+
+*** Approach
+#+begin_src c
+
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+// User function template for C++
+class Solution {
+public:
+  int findMaximum(vector<int> &arr) {
+    // code here
+    int n = arr.size();
+    int left = 0;
+    int right = n - 1;
+
+    while (left <= right) {
+      int m1 = left + (right - left) / 3;
+      int m2 = right - (right - left) / 3;
+
+      if (arr[m1] < arr[m2]) {
+        left = m1 + 1;
+      } else {
+        right = m2 - 1;
+      }
+    }
+    // cout << "Left: " << left << ", Right: " << right << endl;
+    return arr[left];
+  }
+};
+
+// int main() {
+//   Solution sol;
+//   vector<int> arr = {120, 100, 80, 20, 0};
+//   cout << "Maximum element is: " << sol.findMaximum(arr) << endl;
+//   return 0;
+// }
+#+end_src

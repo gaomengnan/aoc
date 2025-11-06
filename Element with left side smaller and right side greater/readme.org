@@ -25,7 +25,7 @@ Explanation: As no element here which we can say smaller in left & greater in ri
 
 题目要求 大于左边的 并且小于右边的
 
-==转换为 大于左边的最大值  小于右边最小值==
+==转换为满足条件 大于左边的最大值  小于右边最小值==
 
 
 #+begin_src c

@@ -13,21 +13,21 @@ import (
 
 func main() {
 	solve1()
-  solve2()
+	solve2()
 }
 
 func solve2() {
-  f, err := os.Open("input.txt")
-  defer f.Close()
+	f, err := os.Open("input.txt")
+	defer f.Close()
 
-  if err != nil {
-    panic(err)
-  }
+	if err != nil {
+		panic(err)
+	}
 
-  scanner := bufio.NewScanner(f)
-  var left []int
-  var right []int
-  var sum int
+	scanner := bufio.NewScanner(f)
+	var left []int
+	var right []int
+	var sum int
 
 	for scanner.Scan() {
 		content := scanner.Text()
@@ -53,31 +53,31 @@ func solve2() {
 	sort.Ints(left)
 	sort.Ints(right)
 	for i := 0; i < len(left); i++ {
-    j := 0
+		j := 0
 
-    c := left[i]
+		c := left[i]
 
-    counter := 0
+		counter := 0
 
-    // fmt.Printf("Current Diff Value is %d \n", i)
+		// fmt.Printf("Current Diff Value is %d \n", i)
 
-    for  j <= len(right) - 1{
-      // fmt.Printf("J = %d \n", j)
-      time.Sleep(time.Duration(2))
-      if right[j]< c {
-        j++
-        continue
-      }
-      if right[j] > c {
-        break
-      }
+		for j <= len(right)-1 {
+			// fmt.Printf("J = %d \n", j)
+			time.Sleep(time.Duration(2))
+			if right[j] < c {
+				j++
+				continue
+			}
+			if right[j] > c {
+				break
+			}
 
-      if c == right[j] {
-        counter++
-        j++
-      }
-    }
-    sum += c * counter
+			if c == right[j] {
+				counter++
+				j++
+			}
+		}
+		sum += c * counter
 	}
 	fmt.Printf("Part-2 Sum Of %d \n", sum)
 }

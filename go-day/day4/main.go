@@ -94,7 +94,7 @@ func part2() {
 				toRight := fmt.Sprintf("%s%s%s", string(x0), string(z0), string(y1))
 				toLeft := fmt.Sprintf("%s%s%s", string(x1), string(z0), string(y0))
 				if (toRight == "MAS" || toRight == "SAM") && (toLeft == "SAM" || toLeft == "MAS") {
-          total++
+					total++
 				}
 			}
 

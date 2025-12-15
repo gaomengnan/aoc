@@ -33,7 +33,7 @@ func parseSubArgs(str string) []string {
 	// 类似这个需要输出出来
 	// prevEscape := false
 
-  escapes := make(map[int]struct{})
+	escapes := make(map[int]struct{})
 
 	var check func(data bytes.Buffer, i int) ([]byte, bool)
 	check = func(data bytes.Buffer, i int) ([]byte, bool) {
@@ -41,13 +41,13 @@ func parseSubArgs(str string) []string {
 		if data.Len() > 0 {
 			_buf := data.Bytes()
 			// 如果上一个为\
-			if _buf[data.Len() - 1] == '\\' {
+			if _buf[data.Len()-1] == '\\' {
 
-        _, ok := escapes[data.Len()-1]
+				_, ok := escapes[data.Len()-1]
 
-        if ok {
-          return data.Bytes(), false
-        }
+				if ok {
+					return data.Bytes(), false
+				}
 
 				_buf = append(_buf[:data.Len()-1], _buf[data.Len()-1+1:]...)
 				// data.Reset()
@@ -132,23 +132,23 @@ func parseSubArgs(str string) []string {
 			//   item = 0
 			// }
 			// fmt.Printf("%d --- %v \n", _i,  string(item))
-      newB, ok := check(bf, _i);
+			newB, ok := check(bf, _i)
 
-      if ok && ( item =='\\') {
-        bf.Reset()
-        bf.Write(newB)
-      }
+			if ok && (item == '\\') {
+				bf.Reset()
+				bf.Write(newB)
+			}
 
 			bf.WriteRune(item)
 
-      if item == '\\' && ok {
-        escapes[bf.Len()-1] = struct{}{}
-      }
+			if item == '\\' && ok {
+				escapes[bf.Len()-1] = struct{}{}
+			}
 			continue
 		}
 
 		if quota == 0 {
-      nv, ok := check(bf, _i)
+			nv, ok := check(bf, _i)
 
 			if item == ' ' && !ok {
 				if bf.Len() > 0 {
@@ -162,9 +162,9 @@ func parseSubArgs(str string) []string {
 				// 	item = 0
 				// }
 				if ok {
-          bf.Reset()
-          bf.Write(nv)
-        }
+					bf.Reset()
+					bf.Write(nv)
+				}
 				bf.WriteRune(item)
 				continue
 			}

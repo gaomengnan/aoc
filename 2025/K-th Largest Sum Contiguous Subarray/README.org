@@ -1,0 +1,65 @@
+#+title: K-th Largest Sum Contiguous Subarray
+
+*** Desc
+Given an array arr[] of size n, find the sum of the K-th largest sum among all contiguous subarrays. In other words, identify the K-th largest sum from all possible subarrays and return it
+
+**** Examples
+#+begin_example
+Input: arr[] = [3, 2, 1], k = 2
+Output: 5
+Explanation: The different subarray sums we can get from the array are = [6, 5, 3, 2, 1]. Where 5 is the 2nd largest.
+
+Input: arr[] = [2, 6, 4, 1], k = 3
+Output: 11
+Explanation: The different subarray sums we can get from the arrayare = [13, 12, 11, 10, 8, 6, 5, 4, 2, 1]. Where 11 is the 3rd largest.
+#+end_example
+
+*** Approach
+1. 所有子数组 需要两层循环遍历
+   通过最小堆维护最小值
+   通过处理维持最小堆数量不大于k
+#+begin_src c
+#include <algorithm>
+#include <iostream>
+#include <queue>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+// User function Template for C++
+
+class Solution {
+public:
+  int kthLargest(vector<int> &arr, int k) {
+    // code here
+    priority_queue<int, vector<int>, greater<int>> pq; // 最小堆
+    for (int i = 0; i < arr.size(); i++) {
+
+      int cur_sum = 0;
+
+      for (int j = i; j < arr.size(); j++) {
+        cur_sum += arr[j];
+
+        if (pq.size() < k) {
+          pq.push(cur_sum);
+        } else if (cur_sum > pq.top()) {
+          pq.pop();
+          pq.push(cur_sum);
+        }
+      }
+    }
+
+    return pq.top();
+  }
+};
+
+int main() {
+  Solution sol;
+  vector<int> arr = {3, 1, 5, 12, 2, 11};
+  int k = 3;
+  cout << sol.kthLargest(arr, k) << endl; // Expected output: 5
+  return 0;
+}
+
+#+end_src

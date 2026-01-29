@@ -1,0 +1,53 @@
+* 问题
+
+** Closest Three Sum
+
+Given an array, arr of integers, and another number target, find three integers in the array such that their sum is closest to the target. Return the sum of the three integers.
+
+Note: If there are multiple solutions, return the maximum one.
+
+
+*** 示例
+
+Input: arr[] = [-7, 9, 8, 3, 1, 1], target = 2
+Output: 2
+Explanation: There is only one triplet present in the array where elements are -7,8,1 whose sum is 2.
+
+
+*** 解法
+
+1. 双指针
+
+#+begin_src python
+class Solution:
+    def threeSumClosest(self, arr, target):
+        arr.sort()
+
+        n = len(arr)
+
+        ans = float('inf')
+
+        for i in range(n):
+            s = i + 1
+            f = n - 1
+
+            while s < f:
+                toSum = arr[i] + arr[s] + arr[f]
+
+                if toSum >= target:
+                    f -= 1
+
+                else:
+                    s += 1
+
+                m1 = abs(toSum - target)
+                m2 = abs(ans - target)
+
+                if m1 < m2:
+                    ans = toSum
+                elif m1 == m2:
+                    ans = max(toSum, ans)
+                else:
+                    pass
+        return ans
+#+end_src

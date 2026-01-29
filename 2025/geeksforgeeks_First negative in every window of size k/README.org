@@ -1,0 +1,57 @@
+* First negative in every window of size k
+
+Given an array arr[]  and a positive integer k, find the first negative integer for each and every window(contiguous subarray) of size k.
+
+Note: If a window does not contain a negative integer, then return 0 for that window.
+
+** Examples:
+
+Input: arr[] = [-8, 2, 3, -6, 10] , k = 2
+Output: [-8, 0, -6, -6]
+Explanation:
+Window [-8, 2] First negative integer is -8.
+Window [2, 3] No negative integers, output is 0.
+Window [3, -6] First negative integer is -6.
+Window [-6, 10] First negative integer is -6.
+
+
+*** 思路
+
+1. 双指针
+
+#+begin_src python
+class Solution:
+    def firstNegInt(self, arr, k):
+        n = len(arr)
+
+        left = 0
+        i = 0
+        found = []
+        ans = []
+
+        while i < n:
+            if arr[i] < 0:
+                found.append(i)
+                # found = arr[i]
+
+            if i - left + 1 == k:
+                ng = 0
+
+                if found:
+                    ng = arr[found[0]]
+                    # ans.append(arr[found[0]])
+                else:
+                    ng = 0
+
+                ans.append(ng)
+
+                # found = 0
+                left += 1
+
+                if found and left > found[0]:
+                    found.pop(0)
+
+            i += 1
+
+        return ans
+#+end_src

@@ -1,0 +1,56 @@
+* Question
+
+** Minimum Window Substring
+
+*** Description
+
+You are given two strings, s1 and s2. Your task is to find the smallest substring in s1 such that s2 appears as a subsequence within that substring. The characters of s2 must appear in the same sequence within the substring of s1. If there are multiple valid substrings of the same minimum length, return the one that appears first in s1. If no such substring exists, return an empty string. Note: Both the strings contain only lowercase english letters.
+
+
+*** Examples
+
+#+begin_example
+Input: s1 = "geeksforgeeks", s2 = "eksrg"
+Output: "eksforg"
+Explanation: "eksforg" satisfies all required conditions. s2 is its subsequence and it is smallest and leftmost among all possible valid substrings of s1.
+#+end_example
+
+
+*** 解法
+
+#+begin_src python
+class Solution:
+    def minWindow(self, s1: str, s2: str) -> str:
+        n, m = len(s1), len(s2)
+        ans = ""
+        min_len = float("inf")
+
+        i = 0
+        while i < n:
+            # step1: 找到匹配起点
+            if s1[i] == s2[0]:
+                j, k = i, 0
+                while j < n and k < m:  # 前向匹配
+                    if s1[j] == s2[k]:
+                        k += 1
+                    j += 1
+
+                if k == m:  # s2 匹配完了
+                    end = j - 1
+                    k -= 1
+                    # step2: 从右往左收缩，找到最小 start
+                    while end >= i:
+                        if s1[end] == s2[k]:
+                            k -= 1
+                            if k < 0:
+                                break
+                        end -= 1
+                    start = end
+                    if j - start < min_len:
+                        min_len = j - start
+                        ans = s1[start:j]
+                    i = start  # 跳到更优的起点
+            i += 1
+
+        return ans
+#+end_src

@@ -1,0 +1,47 @@
+* 问题
+
+** Find the first node of loop in linked list
+
+*** 描述
+
+You are given the head of a singly linked list. If a loop is present in the linked list then return the first node of the loop else return -1.
+
+Note: Internally, pos(1 based index) is used to denote the position of the node that tail's next pointer is connected to. If pos = 0, it means the last node points to null, indicating there is no loop. Note that pos is not passed as a parameter.
+
+
+*** 示例
+
+
+*** 解法
+
+1. 使用快慢指针 先找到冲撞的地方
+
+2. 在使用循环找到回路点
+
+
+#+begin_src python
+class Solution:
+    def cycleStart(self, head):
+        if not head or not head.next:
+            return -1  # 空链表或单节点，不可能有环
+
+        slow = head
+
+        fast = head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+            if fast == slow:
+                break
+        else:
+            return -1
+
+        slow = head
+        while slow != fast:
+            slow = slow.next
+            fast = fast.next
+
+        return slow
+#+end_src

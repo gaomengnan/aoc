@@ -1,0 +1,23 @@
+* Remove Duplicates Sorted Array
+你得到一个已排序的数组 arr[]，其中包含正整数。
+你的任务是移除数组中的所有重复元素，使得每个元素只出现一次。
+返回一个只包含唯一元素的数组。
+
+** 解法
+1.双指针
+#+begin_src python
+class Solution:
+    def removeDuplicates(self, arr):
+        n = len(arr)
+
+        res = arr[-1]
+
+        for i in range(n - 2, -1, -1):
+            if arr[i] == res:
+                del arr[i]
+            else:
+                res = arr[i]
+
+
+Solution().removeDuplicates([2, 2, 2, 4])
+#+end_src

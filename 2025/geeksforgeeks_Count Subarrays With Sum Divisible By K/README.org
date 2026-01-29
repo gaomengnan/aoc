@@ -1,0 +1,15 @@
+#+title: Count Subarrays With Sum Divisible By K
+
+*** Description
+
+Given an array arr[] and an integer k, the task is to count all subarrays whose sum is divisible by k.
+
+#+begin_example
+
+#+end_example
+
+*** Solution
+
+#+begin_src c
+
+#+end_src

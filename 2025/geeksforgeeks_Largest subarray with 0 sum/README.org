@@ -1,0 +1,66 @@
+* DONE Largest subarray with 0 sum
+:LOGBOOK:
+CLOCK: [2025-09-24 三 10:22]
+:END:
+
+*** Problem
+Given an array arr[] containing both positive and negative integers, find the length of the longest subarray whose sum is 0.
+
+*** Explanation
+If the prefix sum at two indices i and j (i < j) is the same, the subarray (i+1 .. j) sums to 0. Also, whenever the prefix sum itself becomes 0 at index i, the subarray (0 .. i) is valid. Track the earliest occurrence of each prefix sum to maximize length.
+
+*** Example
+#+begin_example
+Input:  [15, -2, 2, -8, 1, 7, 10, 23]
+Prefix: 15, 13, 15, 7, 8, 15, 25, 48
+Same prefix 15 first at 0, later at 5 -> length 5
+Output: 5
+Subarray: [-2, 2, -8, 1, 7]
+#+end_example
+
+*** Algorithm
+1. Initialize prefix sum s = 0, answer ans = 0
+2. Hash map first: prefix_sum -> first index stored
+3. For each index i:
+   - s += arr[i]
+   - If s == 0, ans = max(ans, i + 1)
+   - If s seen before at k, ans = max(ans, i - k)
+   - Else store first[s] = i
+4. Return ans
+
+*** Complexity
+- Time: O(n)
+- Space: O(n)
+
+*** Edge Cases
+- No zero-sum subarray -> 0
+- Entire array sums to 0
+- Multiple zeros / sequences of zeros
+- Large magnitude values (use long long to avoid overflow)
+
+*** Implementation (C++)
+#+begin_src cpp
+#include <unordered_map>
+#include <vector>
+using namespace std;
+
+int maxLength(vector<int>& a) {
+    long long s = 0;
+    unordered_map<long long,int> first;
+    int ans = 0;
+    for (int i = 0; i < (int)a.size(); ++i) {
+        s += a[i];
+        if (s == 0) ans = max(ans, i + 1);
+        auto it = first.find(s);
+        if (it != first.end()) ans = max(ans, i - it->second);
+        else first[s] = i;
+    }
+    return ans;
+}
+#+end_src
+
+*** Naive (Contrast)
+Check all O(n^2) subarrays and sum -> too slow for large n.
+
+*** Summary
+Core idea: same prefix sum implies zero-sum interval between occurrences; record earliest index to maximize length.

@@ -1,0 +1,19 @@
+* Question
+** Three Sum
+
+
+*** Description
+
+Given an integer array arr, return all the unique triplets [arr[i], arr[j], arr[k]] such that i != j, i != k, and j != k, and arr[i] + arr[j] + arr[k] == 0.
+
+Note: The triplets must be returned in sorted order, the solution vector should also be sorted, and the answer must not contain any duplicate triplets.
+
+*** Examples
+#+begin_example
+Input: arr = [-1,0,1,2,-1,-4]
+Output: [[-1,-1,2],[-1,0,1]]
+Explanation: arr[0] + arr[1] + arr[2] = (-1) + 0 + 1 = 0.
+arr[1] + arr[2] + arr[4] = 0 + 1 + (-1) = 0.
+arr[0] + arr[3] + arr[4] = (-1) + 2 + (-1) = 0.
+The distinct triplets are [-1,0,1] and [-1,-1,2].
+#+end_example

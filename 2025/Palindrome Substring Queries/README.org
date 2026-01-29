@@ -1,0 +1,71 @@
+#+title: Palindrome Substring Queries
+
+*** Desc
+
+Given a string s and a 2D list queries[][] of size q, where each queries[i] consists of two integers [left, right]. Each query refers to the substring s[left : right], where both left and right are inclusive (0-based indexing).
+
+For each query, find whether the substring s[left : right] forms a palindrome.
+
+#+begin_example
+Input: s = "abaaabaaaba", queries[][] = [[0, 10], [5, 8], [2, 5], [5, 9]]
+Output: [1, 0, 0, 1]
+Explanation: Lets process all the queries one by one:
+[0, 10]: The substring is "abaaabaaaba" which is a palindrome.
+[5, 8]: The substring is "baaa" which is not a palindrome.
+[2, 5]: The substring is "aaab" which is not a palindrome.
+[5, 9]: The substring is "baaab" which is a palindrome.
+#+end_example
+
+*** Approach
+1. 对queries 中 pair 进行检查
+   O(n * q) + O(1)
+
+#+begin_src c
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+  bool ispal(string &s, int start, int end) {
+    while (start < end) {
+      if (s[start] != s[end]) {
+        return false;
+      }
+      start++;
+      end--;
+    }
+    return true;
+  }
+  vector<int> palQueries(string &s, vector<vector<int>> &queries) {
+    vector<int> res;
+    vector<char> chars(s.begin(), s.end());
+
+    for (int i = 0; i < queries.size(); i++) {
+      int l = queries[i][0];
+      int r = queries[i][1];
+      if (ispal(s, l, r)) {
+        res.push_back(1);
+      } else {
+        res.push_back(0);
+      }
+    }
+    return res;
+  }
+};
+
+int main() {
+  Solution sol;
+  string s = "ababa";
+  vector<vector<int>> queries = {{0, 2}, {1, 4}, {0, 4}};
+  vector<int> results = sol.palQueries(s, queries);
+  for (int res : results) {
+    cout << res << " ";
+  }
+  cout << endl;
+  return 0;
+}
+
+#+end_src

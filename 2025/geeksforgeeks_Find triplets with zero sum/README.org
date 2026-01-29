@@ -1,0 +1,55 @@
+* Find triplets with zero sum
+
+Given an array arr[] of integers, determine whether it contains a triplet whose sum equals zero. Return true if such a triplet exists, otherwise, return false.
+
+** Examples:
+
+Input: arr[] = [0, -1, 2, -3, 1]
+Output: true
+Explanation: The triplet [0, -1, 1] has a sum equal to zero.
+
+
+*** 双执政
+
+- 首先排序
+- 第一层cur遍历
+  使用两个指针 i(>cur),j(<n-1) 扫描 如果小于0 就移动i 如果 > 0 就移动 j
+
+
+#+begin_src python
+
+class Solution:
+    def findTriplets(self, arr):
+        #code here
+
+        # -3 -1 0 1 2
+        #
+
+        arr.sort()
+
+
+        n = len(arr)
+
+        for cur in range(n):
+            i = cur + 1
+            j = n-1
+            while i < j :
+                toSum = arr[cur] + arr[i] + arr[j]
+                if toSum ==0:
+                    return True
+
+                elif toSum > 0:
+                    j -=1
+                else:
+                    i +=1
+
+
+
+        return False
+
+#+end_src
+
+*** 时间复杂度
+
+**** 先排序 O(n longn)
+**** 遍历查找 O(n^2)

@@ -1,0 +1,65 @@
+#+title: Find All Triplets with Zero Sum
+
+* DONE
+:LOGBOOK:
+CLOCK: [2025-09-23 二 14:00]--[2025-09-23 二 14:25] =>  0:25
+:END:
+
+*** Description / 题目描述
+Given an array arr[], find all possible index triplets i, j, k (i < j < k) such that arr[i] + arr[j] + arr[k] == 0. The returned triplets are indices, not values.
+
+*** Examples / 示例
+#+begin_example
+Input:  arr[] = [0, -1, 2, -3, 1]
+Output: [[0, 1, 4], [2, 3, 4]]
+Explanation:
+arr[0] + arr[1] + arr[4] = 0 + (-1) + 1 = 0
+arr[2] + arr[3] + arr[4] = 2 + (-3) + 1 = 0
+#+end_example
+
+More cases:
+- arr = [0,0,0] -> [[0,1,2]]
+- arr = [1,2,3] -> []
+- arr = [-2,0,1,1,2] -> may have multiple index triplets depending on duplicates
+
+*** Approach / 解法思路
+- Fix index i from 0..n-3, target = -arr[i]
+- In subarray [i+1..n-1], use a hashmap to find pairs (j,k) with arr[j] + arr[k] == target
+- Push triplet [i, j, k]; by construction i < j < k
+- Implementation references:
+  - getPairs: geeksforgeeks_Find All Triplets with Zero Sum/sol.cpp:9
+  - findTriplets: geeksforgeeks_Find All Triplets with Zero Sum/sol.cpp:32
+  - sample main: geeksforgeeks_Find All Triplets with Zero Sum/sol.cpp:46
+
+This enumerates all valid index triplets. It does not attempt to deduplicate by values; duplicates in values naturally produce different index triplets.
+
+Alternative: sorting + two-pointer is also O(n^2) for value-based triplets; here we keep indices intact, so the hashmap approach is used.
+
+*** Complexity / 复杂度
+- Time: O(n^2)
+- Extra space: O(n) per fixed i for the hashmap (excluding output). Worst-case output size can be O(n^2).
+
+*** Constraints & Notes / 约束与说明
+- Works for any integer array, n >= 0; returns [] if n < 3
+- Output triplets are indices with i < j < k
+- If you need unique value triplets (ignoring index identity), add value-level deduplication
+- If you need values instead of indices, map [i,j,k] -> [arr[i], arr[j], arr[k]] when printing
+
+*** Build & Run / 构建与运行
+Using g++ (C++17):
+
+#+begin_src bash
+g++ -std=c++17 -O2 sol.cpp -o triplets && ./triplets
+#+end_src
+
+Expected output for the baked-in sample:
+#+begin_example
+[0, 1, 4]
+[2, 3, 4]
+#+end_example
+
+*** Edge Cases / 边界情况
+- Fewer than 3 elements -> []
+- All zeros -> one or multiple index triplets depending on array length
+- Large duplicates -> many valid index triplets
+- No solution -> []

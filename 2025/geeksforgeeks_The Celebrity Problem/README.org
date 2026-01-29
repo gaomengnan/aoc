@@ -1,0 +1,77 @@
+* The Celebrity Problem
+
+A celebrity is a person who is known to all but does not know anyone at a party. A party is being organized by some people. A square matrix mat[][] of size n*n is used to represent people at the party such that if an element of row i and column j is set to 1 it means ith person knows jth person. You need to return the index of the celebrity in the party, if the celebrity does not exist, return -1.
+
+
+** Examples:
+#+begin_src
+Input: mat[][] = [[1, 1, 0],
+                [0, 1, 0],
+                [0, 1, 1]]
+Output: 1
+Explanation: 0th and 2nd person both know 1st person and 1st person does not know anyone. Therefore, 1 is the celebrity person.
+
+
+#+end_src
+
+*** 时间复杂度O(n^2)
+
+ 使用两个字典记录每一个人认识的人以及被认识的次数
+
+#+begin_src python
+class Solution:
+    def celebrity(self, mat):
+        n = len(mat)
+        cs = {i: 0 for i in range(n)}
+        kcs = {i: 0 for i in range(n)}
+
+        for i in range(n):
+            j = 0
+            while j < n:
+                if mat[i][j] == 1:
+                    cs[j] += 1
+                    kcs[i] += 1
+
+                j += 1
+
+        for i in range(n):
+            if cs[i] == n and kcs[i] == 1:
+                return i
+
+        return -1
+#+end_src
+
+*** 时间复杂度数O(n)
+
+使用双指针逐渐淘汰不合格人
+
+#+begin_src python
+class Solution:
+    def celebrity(self, mat):
+        n = len(mat)
+
+        i = 0
+        j = n - 1
+
+        ans = -1
+        while i < j:
+            if mat[i][j] == 1 and i != j:
+                # 说明 i 认识
+                # 自己认识自己
+                i += 1
+            else:
+                j -= 1
+
+        ans = i
+
+        # print(ans)
+        for i in range(n):
+            if i != ans:
+                if mat[ans][i] == 1 or mat[i][ans] == 0:
+                    return -1
+
+        return ans
+
+        # print(cs)
+        # print(kcs)
+#+end_src

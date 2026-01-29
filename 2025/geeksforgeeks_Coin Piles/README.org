@@ -1,0 +1,15 @@
+* 问题
+
+** Coin Piles
+
+*** 描述
+
+给定一个整数数组 arr[]，其中每个元素表示一堆硬币的数量。同时给定一个整数 k。
+你的任务是：移除最少数量的硬币，使得在更新后的所有硬币堆中，任意两堆之间的硬币数量的差值不超过 k。
+注意：你也可以通过移除某一堆中的所有硬币来删除这堆。
+
+#+begin_example
+Input: arr[] = [2, 2, 2, 2], k = 0
+Output: 0
+Explanation: For any two piles the difference in the number of coins is <= 0. So no need to remove any coin.
+#+end_example

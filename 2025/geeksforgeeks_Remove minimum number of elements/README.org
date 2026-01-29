@@ -1,0 +1,18 @@
+#+title: Remove minimum number of elements
+
+*** Description
+
+Given two arrays arr1[] and arr2[], the task is to find the minimum number of elements to remove from each array such that no common elements exist between the two arrays.
+
+*** Examples
+#+begin_example
+Input: arr1[] = [2, 3, 4, 5, 8], arr2[] = [1, 2, 3, 4]
+Output: 3
+Explanation: To remove all common elements, we need to delete 2, 3, and 4 from either array.
+#+end_example
+
+*** Solution
+
+#+begin_src c
+
+#+end_src

@@ -1,0 +1,80 @@
+#+title: Smallest distinct window
+
+*** Desc
+Given a string str, your task is to find the length of the smallest window that contains all the characters of the given string at least once.
+
+**** Examples
+
+#+begin_example
+Input: str = "aabcbcdbca"
+Output: 4
+Explanation: Sub-String "dbca" has the smallest length that contains all the characters of str.
+
+Input: str = "aaab"
+Output: 2
+Explanation: Sub-String "ab" has the smallest length that contains all the characters of str.
+
+Input: str = "geeksforgeeks"
+Output: 7
+Explanation: There are multiple substring with smallest length that contains all characters of str, "eksforg" and "ksforge".
+#+end_example
+
+
+*** Approach
+
+#+begin_src c
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+  int findSubString(string &str) {
+    // code here
+    int n = str.size();
+    unordered_map<int, int> mp;
+    unordered_set<int> counter;
+
+    int ans = INT_MAX;
+
+    for (int i = 0; i < n; ++i) {
+      counter.insert(str[i] - 'a');
+    }
+    int start = 0;
+    int k = counter.size();
+    for (int i = 0; i < n; i++) {
+      mp[str[i] - 'a']++;
+      while (mp.size() > k) {
+        if (--mp[str[start] - 'a'] == 0) {
+          mp.erase(str[start] - 'a');
+        }
+      }
+
+      if (mp.size() == k) {
+        ans = min(ans, i - start + 1);
+        while (mp.size() == k) {
+          if (--mp[str[start] - 'a'] == 0) {
+            mp.erase(str[start] - 'a');
+          }
+          start++;
+          if (mp.size() == k) {
+            ans = min(ans, i - start + 1);
+          }
+        }
+      }
+    }
+
+    return ans;
+  }
+};
+// int main() {
+//   Solution sol;
+//   string str = "aabcbcdbca";
+//   cout << sol.findSubString(str) << endl; // Output: 4
+//   return 0;
+// }
+
+#+end_src

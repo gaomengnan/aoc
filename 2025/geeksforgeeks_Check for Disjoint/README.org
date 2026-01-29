@@ -1,0 +1,21 @@
+#+title: Check for Disjoint
+
+*** Description
+
+Given two arrays a[] and b[], check if they are disjoint, i.e., there is no element common between both the arrays. Return true if if they are disjoint, otherwise, false.
+
+*** Examples:
+#+begin_example
+Input: a[] = [2, 34, 11, 9, 3], b[] = [2, 1, 3, 5]
+Output: false
+Explanation: 3 is common in both the arrays.
+#+end_example
+
+*** Solution
+1. 使用 map 存储 A 出现元素
+   遍历B查看是否有元素在map 中
+2. 先排序 然后使用两个指针分别指向a,b 逐渐靠拢
+
+#+begin_src c
+
+#+end_src

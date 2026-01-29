@@ -1,0 +1,70 @@
+#+title: Mr Modulo and Pairs
+
+*** Desc
+Mr. Modulo comes up with another problem related to modulo and this time he has an array of integers arr[] and an integer k, he is interested in finding all the possible pairs arr[i] and arr[j] in the array arr[] such that arr[i] % arr[j] = k. The array given will have distinct elements.
+You are required to return the number of such pairs.
+
+*** Exmaples
+
+#+begin_example
+Input: arr[] = [2, 3, 5, 4, 7], k = 3
+Output: 4
+Explanation: The pairs which give remainder 3 : {7, 4}, {3, 4}, {3, 5}, {3, 7}.
+#+end_example
+
+
+*** Approach
+
+1. 根据公式 a % b = k 转换成已知 b 和 k 求出 a
+
+  **a = m * b + k =>  m取值是关键**
+
+   **m = [0, f(m) = (maxVal - k)/b]**
+
+   所以 求解  0 .. f(m) 范围内去计算 a 的取值
+
+
+#+begin_src c
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+  int countPairs(vector<int> &arr, int k) {
+    int maxVal = *max_element(arr.begin(), arr.end());
+    int n = arr.size();
+
+    unordered_set<int> st(arr.begin(), arr.end());
+    int count = 0;
+
+    for (int j = 0; j < n; j++) {
+      int divisor = arr[j];
+      if (divisor <= k) continue; // 必须保证 k < divisor
+
+      for (int m = 0; m <= (maxVal - k) / divisor; m++) {
+        int candidate = m * divisor + k;
+        if (st.find(candidate) != st.end() && candidate != divisor) {
+          count++;
+          cout << candidate << " % " << divisor << " = " << k << endl;
+        }
+      }
+    }
+
+    return count;
+  }
+};
+
+int main() {
+  Solution sol;
+  vector<int> arr = {2, 3, 5, 4, 7};
+  int k = 3;
+  int result = sol.countPairs(arr, k);
+  cout << "Total pairs = " << result << endl;
+  return 0;
+}
+
+#+end_src

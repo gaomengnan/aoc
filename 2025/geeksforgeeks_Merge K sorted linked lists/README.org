@@ -1,0 +1,53 @@
+* 问题
+
+** Merge K sorted linked lists
+
+*** 描述
+
+Given an array arr[] of n sorted linked lists of different sizes. Your task is to merge all these lists into a single sorted linked list and return the head of the merged list.
+
+
+*** 示例
+
+#+begin_example
+#+end_example
+
+
+
+*** 解法
+
+**** 最小堆
+
+合并 K 个有序链表（用最小堆)
+
+使用分治 + 双指针
+
+#+begin_src python
+def mergeKLists(lists):
+    if not lists:
+        return None
+    if len(lists) == 1:
+        return lists[0]
+
+    mid = len(lists) // 2
+    left = mergeKLists(lists[:mid])
+    right = mergeKLists(lists[mid:])
+
+    return mergeTwoLists(left, right)
+
+def mergeTwoLists(l1, l2):
+    dummy = Node(0)
+    tail = dummy
+
+    while l1 and l2:
+        if l1.val < l2.val:
+            tail.next = l1
+            l1 = l1.next
+        else:
+            tail.next = l2
+            l2 = l2.next
+        tail = tail.next
+
+    tail.next = l1 if l1 else l2
+
+#+end_src

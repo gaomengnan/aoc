@@ -1,0 +1,49 @@
+* 问题
+
+** Smallest window containing 0, 1 and 2
+
+*** 描述
+
+Given a string S consisting of the characters 0, 1 and 2. Your task is to find the length of the smallest substring of string S that contains all the three characters 0, 1 and 2. If no such substring exists, then return -1.
+
+
+
+*** 示例
+#+begin_example
+Input:
+S = 10212
+Output:
+3
+Explanation:
+The substring 102 is the smallest substring
+that contains the characters 0, 1 and 2.
+#+end_example
+
+
+*** 解法
+
+1. 双指针
+
+   #+begin_src python
+
+class Solution:
+    def smallestSubstring(self, S):
+        n = len(S)
+        i = 0
+        wd = {}
+        ans = float("inf")
+
+        for j in range(n):
+            wd[S[j]] = wd.get(S[j], 0) + 1
+
+            # 窗口包含三个字符时，尝试缩小左边界
+            while len(wd) == 3:
+                ans = min(ans, j - i + 1)
+
+                wd[S[i]] -= 1
+                if wd[S[i]] == 0:
+                    del wd[S[i]]
+                i += 1
+
+        return ans if ans != float("inf") else -1
+   #+end_src

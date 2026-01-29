@@ -1,0 +1,86 @@
+* TODO  ReadmeLongest Subarray with K Sections of Unique Items
+
+:LOGBOOK:
+CLOCK: [2025-10-13 一 10:24]--[2025-10-13 一 10:49] =>  0:25
+:END:
+*** Desc
+
+
+You are given an array of positive integers arr[] and an integer k. The task is to find length of the longest subarray with the following conditions
+
+    Each element must fit into one of k sections.
+    Each section can only store a unique number and its multiple consecutive instances.
+
+
+**** Examples
+
+#+begin_example
+Output: 3
+Explanation: The subarray is [1, 2, 2, 3, 1], the sections are [1], [2, 2], [3] and [1]
+Total elements chosen = 3.
+
+Input: arr[] = [4, 1, 1, 3, 2, 2], k = 3
+Output: 5
+Explanation: The subarray is [1, 1, 3, 2, 2], the sections are [1, 1], [3] and [2, 2]
+
+Input: arr[] = [5, 5, 5, 5, 5], k = 1
+Output: 5
+Explanation: All elements are 5, and k = 1, so all can be stored in one section.
+
+#+end_example
+
+
+*** Approach
+
+#+begin_src c
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+int maxElements(vector<int> &arr, int k) {
+  int n = arr.size();
+  unordered_map<int, int> mp;
+
+  int h = 0;
+  int prev = -1;
+  int win_count = 0;
+  int ans = 0;
+
+  for (int i = 0; i < n; ++i) {
+    // cout << i << endl;
+
+    if (arr[i] != prev) {
+      win_count++;
+      prev = arr[i];
+    }
+    int fv = arr[h];
+
+    if (win_count > k) {
+      while (fv == arr[h]) {
+        h++;
+      }
+      win_count--;
+    }
+
+    if (win_count == k) {
+      ans = max(ans, i - h + 1);
+    }
+  }
+
+  return ans;
+}
+
+// int main() { Solution sol; }
+int main() {
+
+  vector<int> arr = {5, 5, 5, 5, 5};
+  int k = 1;
+
+  cout << maxElements(arr, k) << endl;
+
+  return 0;
+}
+
+#+end_src

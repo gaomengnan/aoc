@@ -1,0 +1,56 @@
+* Detect Loop in Linked List
+You are given the head of a singly linked list.
+You have to determine whether the given linked list contains a loop or not.
+
+A loop exists if the next pointer of the last node points to any other node
+(including itself), rather than being null.
+
+Note: Internally, pos (1-based index) is used to denote the position of the node
+that tail's next pointer is connected to. If pos = 0, it means the last node points to null.
+
+** 思路
+使用 Floyd 判圈算法（快慢指针法）:
+1. 定义两个指针：slow 每次走一步，fast 每次走两步。
+2. 如果链表有环，slow 和 fast 最终会相遇。
+3. 如果 fast 或 fast.next 为 nil，说明链表没有环。
+
+** 复杂度分析
+- 时间复杂度: O(n)
+- 空间复杂度: O(1)
+
+** Python 实现
+#+begin_src python
+class Node:
+    def __init__(self, data: int):
+        self.data = data
+        self.next: "Node | None" = None
+
+class Solution:
+    def detectLoop(self, head: Node) -> bool:
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
+#+end_src
+
+** 测试用例
+#+begin_src python
+# 构造一个带环链表: 1 -> 2 -> 3 -> 4 -> 2 ...
+head = Node(1)
+head.next = Node(2)
+head.next.next = Node(3)
+head.next.next.next = Node(4)
+head.next.next.next.next = head.next  # 环
+
+print(Solution().detectLoop(head))  # True
+
+# 构造一个无环链表: 1 -> 2 -> 3 -> None
+head2 = Node(1)
+head2.next = Node(2)
+head2.next.next = Node(3)
+
+print(Solution().detectLoop(head2))  # False
+#+end_src

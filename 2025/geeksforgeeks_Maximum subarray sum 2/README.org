@@ -1,0 +1,25 @@
+* Question
+
+** Maximum subarray sum 2
+
+*** Description
+
+You are given an array arr[] of integers and two integers a and b, You have to find the maximum possible sum of a contiguous subarray whose length is at least a and at most b.
+
+*** Examples
+#+begin_example
+Input: arr[] = [4, 5, -1, -2, 6], a = 2, b = 4
+Output: 9
+Explanation: The subarray [4, 5] has length 2 and sum 9, which is the maximum among all subarrays of length between 2 and 4.
+#+end_example
+
+
+**** Solution
+
+1. dequeue
+2. sliding windows
+3. two points
+
+#+begin_src
+
+#+end_src

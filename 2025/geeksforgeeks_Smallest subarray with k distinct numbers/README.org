@@ -1,0 +1,77 @@
+#+title: Smallest subarray with k distinct numbers
+
+*** Desc
+We are given an array consisting of n integers and an integer k. We need to find the smallest subarray [l, r] (both l and r are inclusive) such that there are exactly k different numbers. If no such subarray exists, print -1 and If multiple subarrays meet the criteria, return the one with the smallest starting index.
+
+*** Examples
+#+begin_example
+    Input: arr[] = { 1, 1, 2, 2, 3, 3, 4, 5}
+                k = 3
+    Output: 5 7
+    Explanation: K Different numbers are present in range of [5,7]  with the minimum range.
+
+
+    Input: arr[] = { 1, 2, 2, 3}
+                k = 2
+    Output: 0 1
+    Explanation: K Different numbers are present in range of [0,2] , with the minimum length and index.
+
+    Input: arr[] = {1, 1, 2, 1, 2}
+                k = 3
+    Output: Invalid k
+    Explanation: K Different Number is not present the array.
+
+#+end_example
+
+*** Approach
+
+#+begin_src c
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+using namespace std;
+void minRange(vector<int> &arr, int n, int k) {
+  unordered_map<int, int> mp;
+
+  int l = 0;
+  int ans = 0;
+  int min_len = INT_MAX;
+  vector<int> pairs(2);
+
+  for (int i = 0; i < arr.size(); i++) {
+    mp[arr[i]]++;
+
+    while (mp.size() > k) {
+      mp[arr[l]]--;
+
+      if (mp[arr[l]] == 0) {
+        mp.erase(arr[l]);
+      }
+      l++;
+    }
+
+    if (mp.size() == k) {
+      // cout << l << i << endl;
+      while (arr[l] == arr[l + 1]) {
+        mp[arr[l]]--;
+        l++;
+      }
+      // cout << l << i << endl;
+      if (i - l < min_len) {
+        min_len = i - l;
+        pairs = {l, i};
+      }
+    }
+  }
+
+  cout << pairs[0] << pairs[1] << endl;
+}
+// Driver code for above function.
+int main() {
+  vector<int> arr = {1, 1, 2, 2, 3, 3, 4, 5};
+  int n = arr.size();
+  int k = 3;
+  minRange(arr, n, k);
+  return 0;
+}
+#+end_src

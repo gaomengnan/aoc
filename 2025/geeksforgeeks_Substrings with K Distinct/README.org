@@ -1,0 +1,103 @@
+* 问题
+
+** Substrings with K Distinct
+
+*** 描述
+
+You are given a string s consisting of lowercase characters and an integer k, You have to count all possible substrings that have exactly k distinct characters.
+
+
+*** Examples
+
+Input: s = "abc", k = 2
+Output: 2
+Explanation: Possible substrings are ["ab", "bc"]
+
+
+
+*** 解法1
+
+#+begin_src python
+
+class Solution:
+    def countSubstr(self, s, k):
+        n = len(s)
+
+        i, j = 0, 0
+
+        wd = []
+
+        counter = 0
+        ans = []
+        ansn = 0
+
+        while j < n:
+            if s[j] not in wd:
+                counter += 1
+
+            wd.append(s[j])
+
+            if counter == k:
+                ans.append(s[i : j + 1])
+                ansn += 1
+
+
+                tmp = wd[:]
+                k1 = i
+
+                while k1 <= j:
+                    poped = tmp.pop(0)
+
+                    if poped not in tmp:
+                        if j < n - 1 and s[j + 1] not in wd:
+                            counter -= 1
+                        break
+                    else:
+                        k1 += 1
+                        ansn += 1
+                        ans.append(s[k1 : j + 1])
+                if j < n - 1 and s[j + 1] not in wd:
+                    i = k1 + 1
+                    wd = tmp
+
+            j += 1
+
+        # print(ans, ansn)
+
+        return ansn
+
+    # a b a
+
+#+end_src
+
+*** 解法2
+
+恰好 k 个不同字符子串数=最多 k 个不同字符子串数−最多 (k-1) 个不同字符子串数
+
+f(x) = f(x) - f(x-1)
+
+
+b c
+^
+#+begin_src python
+class Solution:
+    def countSubstr(self, s, k):
+        from collections import defaultdict
+
+        def atMost(k):
+            count = defaultdict(int)
+            i = 0
+            res = 0
+            for j in range(len(s)):
+                count[s[j]] += 1
+                while len(count) > k:
+                    count[s[i]] -= 1
+                    if count[s[i]] == 0:
+                        del count[s[i]]
+                    i += 1
+                res += j - i + 1  # 当前窗口长度就是以 j 结尾的有效子串数量
+            return res
+
+        return atMost(k) - atMost(k - 1)
+
+#+end_src
